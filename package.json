@@ -1,0 +1,24 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",  "scripts": {
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run redditTop\"",
+    "server": "cd server && npm start",
+    "redditTop": "cd reddit-top && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpbaculio/Front-end.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpbaculio/Front-end/issues"
+  },
+  "homepage": "https://github.com/gpbaculio/Front-end#readme",
+  "dependencies": {
+    "concurrently": "^6.2.1"
+  }
+}
