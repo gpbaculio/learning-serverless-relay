@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently --kill-others \"npm run server\" \"npm run redditTop\"",
-    "server": "cd server && npm start",
+    "server": "cd server && npm run dev",
     "redditTop": "cd reddit-top && npm start"
   },
   "repository": {

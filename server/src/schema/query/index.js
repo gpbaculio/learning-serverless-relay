@@ -6,7 +6,7 @@ const query = new GraphQLObjectType({
     viewer: {
       type: GraphQLString,
       resolve: () => {
-        return "test";
+        return "teste dited724 asdasd726";
       },
     },
   }),
