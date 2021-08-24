@@ -2,7 +2,8 @@
   "name": "front-end",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",  "scripts": {
+  "main": "index.js",
+  "scripts": {
     "dev": "concurrently --kill-others \"npm run server\" \"npm run redditTop\"",
     "server": "cd server && npm start",
     "redditTop": "cd reddit-top && npm start"
