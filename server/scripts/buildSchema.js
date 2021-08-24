@@ -6,7 +6,7 @@ const { getIntrospectionQuery } = require("graphql");
 const mkdirp = require("mkdirp");
 // local imports
 const schema = require("../src/schema");
-const gqlSchemaPath = __dirname + "/../../reddit-top/data/schema.graphql";
+const gqlSchemaPath = __dirname + "/../../reddit-top/data/schema.json";
 graphql(schema, getIntrospectionQuery())
   .then((result) => {
     if (result.errors) {
