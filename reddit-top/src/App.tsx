@@ -1,22 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { graphql } from "babel-plugin-relay/macro";
+import { useLazyLoadQuery } from "react-relay";
+import { AppQuery } from "./__generated__/AppQuery.graphql";
+
+const appQuery = graphql`
+  query AppQuery {
+    viewer
+  }
+`;
 
 function App() {
+  const { viewer } = useLazyLoadQuery<AppQuery>(appQuery, {});
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className='App'>
+      <header className='App-header'>
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          sssadasd ad Edit <code>src/App.tsx</code> and save toad asd reload.
         </p>
         <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+          className='App-link'
+          href='https://reactjs.org'
+          target='_blank'
+          rel='noopener noreferrer'>
+          Learn {viewer}
         </a>
       </header>
     </div>

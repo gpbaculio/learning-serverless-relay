@@ -1,4 +1,3 @@
-import "isomorphic-fetch";
 import {
   Environment,
   Network,
@@ -11,7 +10,7 @@ import {
   GraphQLResponse,
 } from "relay-runtime";
 
-const GRAPHQL_URL = `localhost:3001/graphql`;
+const GRAPHQL_URL = `http://localhost:3001/graphql`;
 
 const getRequestBodyWithUploadables = (
   _request: RequestParameters,
