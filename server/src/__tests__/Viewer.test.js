@@ -20,7 +20,7 @@ const schemaWithMocks = addMocksToSchema({
               num_comments: casual.integer(1, 1000),
               thumbnail: `${casual.url}/${casual.unix_time}.jpg`,
               author: casual.username,
-              name: casual.name,
+              name: casual.word,
             },
           },
           {
@@ -30,7 +30,7 @@ const schemaWithMocks = addMocksToSchema({
               num_comments: casual.integer(1, 1000),
               thumbnail: `${casual.url}/${casual.unix_time}.jpg`,
               author: casual.username,
-              name: casual.name,
+              name: casual.word,
             },
           },
         ],
@@ -54,6 +54,7 @@ describe("query test", () => {
                 num_comments
                 thumbnail
                 author
+                name
               }
             }
           }
@@ -62,6 +63,7 @@ describe("query test", () => {
     `;
 
     const { data } = graphqlSync(schemaWithMocks, query);
+
     expect(data).to.be.an("object");
     expect(data).to.have.property("viewer");
     expect(data.viewer).to.have.keys(["user", "listings"]);
