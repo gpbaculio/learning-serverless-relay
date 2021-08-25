@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useSwipeable } from "react-swipeable";
 
 import Listings from "./Listings";
+
 import { DrawerQuery } from "./__generated__/DrawerQuery.graphql";
 
 const Drawer = () => {
@@ -15,11 +16,11 @@ const Drawer = () => {
   const [hideDrawer, setHideDrawer] = useState(false);
 
   const handlers = useSwipeable({
-    onSwiped: () => {
-      setHideDrawer((t) => !t);
+    onSwipedRight: () => {
+      setHideDrawer(false);
     },
-    onTap: () => {
-      setHideDrawer((t) => !t);
+    onSwipedLeft: () => {
+      setHideDrawer(true);
     },
     trackMouse: true,
   });
@@ -45,11 +46,11 @@ const Drawer = () => {
 export default Drawer;
 
 const DrawerGraphQL = graphql`
-  query DrawerQuery {
+  query DrawerQuery($id: String) {
     viewer {
       user
       id
-      ...ListingsPagination_viewer
+      ...ListingsPagination_viewer @arguments(id: $id)
     }
   }
 `;
@@ -57,4 +58,5 @@ const DrawerGraphQL = graphql`
 const Container = styled(animated.div)`
   height: 100%;
   background-color: red;
+  overflow-y: scroll;
 `;
