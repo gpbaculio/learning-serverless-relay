@@ -5,7 +5,9 @@
 import { ConcreteRequest } from "relay-runtime";
 
 import { FragmentRefs } from "relay-runtime";
-export type DrawerQueryVariables = {};
+export type DrawerQueryVariables = {
+    id?: string | null;
+};
 export type DrawerQueryResponse = {
     readonly viewer: {
         readonly user: string;
@@ -21,16 +23,18 @@ export type DrawerQuery = {
 
 
 /*
-query DrawerQuery {
+query DrawerQuery(
+  $id: String
+) {
   viewer {
     user
     id
-    ...ListingsPagination_viewer
+    ...ListingsPagination_viewer_1Bmzm5
   }
 }
 
-fragment ListingsPagination_viewer on Viewer {
-  listings(first: 7) {
+fragment ListingsPagination_viewer_1Bmzm5 on Viewer {
+  listings(first: 7, id: $id) {
     pageInfo {
       startCursor
       endCursor
@@ -40,12 +44,13 @@ fragment ListingsPagination_viewer on Viewer {
     edges {
       cursor
       node {
+        id
         title
         created
         num_comments
         thumbnail
         author
-        id
+        name
         __typename
       }
     }
@@ -54,30 +59,43 @@ fragment ListingsPagination_viewer on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "user",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v3 = {
+  "kind": "Variable",
+  "name": "id",
+  "variableName": "id"
+},
+v4 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 7
-  }
+  },
+  (v3/*: any*/)
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "DrawerQuery",
@@ -90,10 +108,12 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
           (v1/*: any*/),
+          (v2/*: any*/),
           {
-            "args": null,
+            "args": [
+              (v3/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "ListingsPagination_viewer"
           }
@@ -106,7 +126,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "DrawerQuery",
     "selections": [
@@ -118,11 +138,11 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
           (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "ListingConnection",
             "kind": "LinkedField",
             "name": "listings",
@@ -190,6 +210,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -225,7 +246,13 @@ return {
                         "name": "author",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -240,12 +267,14 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "listings(first:7)"
+            "storageKey": null
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
-            "filters": null,
+            "args": (v4/*: any*/),
+            "filters": [
+              "id"
+            ],
             "handle": "connection",
             "key": "ListingsPagination_viewer_listings",
             "kind": "LinkedHandle",
@@ -257,14 +286,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fcdbb2ed3d500aa5f1f6289732f8cf69",
+    "cacheID": "5afad2fdbfffa616d8a7fead2ef7d561",
     "id": null,
     "metadata": {},
     "name": "DrawerQuery",
     "operationKind": "query",
-    "text": "query DrawerQuery {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer\n  }\n}\n\nfragment ListingsPagination_viewer on Viewer {\n  listings(first: 7) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        title\n        created\n        num_comments\n        thumbnail\n        author\n        id\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query DrawerQuery(\n  $id: String\n) {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer_1Bmzm5\n  }\n}\n\nfragment ListingsPagination_viewer_1Bmzm5 on Viewer {\n  listings(first: 7, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        title\n        created\n        num_comments\n        thumbnail\n        author\n        name\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ca55ed7c17b3cf426a29597b71bae579';
+(node as any).hash = '2c30d2fd89fe84e207a8b06bdac063eb';
 export default node;

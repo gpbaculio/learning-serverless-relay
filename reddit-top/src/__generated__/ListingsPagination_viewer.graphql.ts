@@ -16,11 +16,13 @@ export type ListingsPagination_viewer = {
         readonly edges: ReadonlyArray<{
             readonly cursor: string;
             readonly node: {
+                readonly id: string;
                 readonly title: string | null;
-                readonly created: string | null;
+                readonly created: number | null;
                 readonly num_comments: number | null;
                 readonly thumbnail: string | null;
                 readonly author: string | null;
+                readonly name: string | null;
             } | null;
         } | null> | null;
     } | null;
@@ -49,6 +51,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "cursor"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "id"
     }
   ],
   "kind": "Fragment",
@@ -80,7 +87,13 @@ return {
   "selections": [
     {
       "alias": "listings",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "id",
+          "variableName": "id"
+        }
+      ],
       "concreteType": "ListingConnection",
       "kind": "LinkedField",
       "name": "__ListingsPagination_viewer_listings_connection",
@@ -152,6 +165,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "title",
                   "storageKey": null
                 },
@@ -187,6 +207,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 }
@@ -204,5 +231,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c37ff22a1aed98e038b972a33ff415ba';
+(node as any).hash = 'f2923cc0acb673800902bc6bfb6e3bdb';
 export default node;
