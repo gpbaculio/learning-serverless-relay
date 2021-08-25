@@ -1,31 +1,22 @@
-import { graphql } from "babel-plugin-relay/macro";
-import { useLazyLoadQuery } from "react-relay";
-import { AppQuery } from "./__generated__/AppQuery.graphql";
+import { Suspense } from "react";
+import styled from "styled-components";
 
-const appQuery = graphql`
-  query AppQuery {
-    viewer
-  }
-`;
+import Drawer from "./Drawer";
 
 function App() {
-  const { viewer } = useLazyLoadQuery<AppQuery>(appQuery, {});
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>
-          sssadasd ad Edit <code>src/App.tsx</code> and save toad asd reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn {viewer}
-        </a>
-      </header>
-    </div>
+    <Container className='App'>
+      <Suspense fallback={<h1>Loading Listings...</h1>}>
+        <Drawer />
+      </Suspense>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+`;

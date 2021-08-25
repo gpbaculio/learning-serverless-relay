@@ -20,6 +20,7 @@ const schemaWithMocks = addMocksToSchema({
               num_comments: casual.integer(1, 1000),
               thumbnail: `${casual.url}/${casual.unix_time}.jpg`,
               author: casual.username,
+              name: casual.name,
             },
           },
           {
@@ -29,6 +30,7 @@ const schemaWithMocks = addMocksToSchema({
               num_comments: casual.integer(1, 1000),
               thumbnail: `${casual.url}/${casual.unix_time}.jpg`,
               author: casual.username,
+              name: casual.name,
             },
           },
         ],
@@ -75,6 +77,7 @@ describe("query test", () => {
       expect(edge.node).to.have.property("num_comments").to.be.a("number");
       expect(edge.node).to.have.property("thumbnail").to.be.a("string");
       expect(edge.node).to.have.property("author").to.be.a("string");
+      expect(edge.node).to.have.property("name").to.be.a("string");
     });
   });
 });

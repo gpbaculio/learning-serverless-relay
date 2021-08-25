@@ -1,4 +1,5 @@
 const { GraphQLObjectType } = require("graphql");
+
 const GraphQLViewerType = require("./Viewer");
 
 const query = new GraphQLObjectType({
@@ -6,7 +7,10 @@ const query = new GraphQLObjectType({
   fields: () => ({
     viewer: {
       type: GraphQLViewerType,
-      resolve: () => 'guest',
+      resolve: () => ({
+        id: "guest-id",
+        user: "guest",
+      }),
     },
   }),
 });

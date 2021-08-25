@@ -36,6 +36,10 @@ const GraphQLListType = new GraphQLObjectType({
       type: GraphQLInt,
       resolve: ({ created }) => created,
     },
+    name: {
+      type: GraphQLString,
+      resolve: ({ name }) => name,
+    },
   }),
 });
 
@@ -48,25 +52,29 @@ const GraphQLViewerType = new GraphQLObjectType({
     id: globalIdField("Viewer"),
     user: {
       type: new GraphQLNonNull(GraphQLString),
-      resolve: (user) => user,
+      resolve: (user) => user.user,
     },
     listings: {
       type: listingsConnection,
       args: {
         ...connectionArgs,
+        id: { type: GraphQLString },
       },
-      resolve: async (_, { ...args }) => {
-        console.log("args: ", args);
+      resolve: async (_, { first, after }) => {
         try {
           const { data } = await axios.get("https://reddit.com/top.json", {
             params: {
-              limit: 2,
+              limit: 100,
             },
           });
-          const result = data.data.children.map(({ data }) => data);
-          return connectionFromArray(result, args);
+
+          const result = data.data.children.map(({ data }) => ({
+            ...data,
+            id: data.name,
+          }));
+
+          return connectionFromArray(result, { first, after });
         } catch (e) {
-          console.log("e: ", e);
           return null;
         }
       },
