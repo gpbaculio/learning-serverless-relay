@@ -11,6 +11,7 @@
     "domain": ""
   },
   "scripts": {
+    "test": "mocha src/__tests__/**/*.js",
     "buildSchema": "node scripts/buildSchema",
     "start": "node app.local.js",
     "dev": "nodemon app.local.js",
@@ -39,8 +40,12 @@
     "graphql-relay": "^0.8.0"
   },
   "devDependencies": {
+    "@graphql-tools/mock": "^8.2.2",
+    "casual": "^1.6.2",
+    "chai": "^4.3.4",
     "copy-webpack-plugin": "^7.0.0",
     "cross-var": "^1.1.0",
+    "mocha": "^9.1.0",
     "nodemon": "^2.0.12",
     "source-map-support": "^0.5.19",
     "webpack": "^5.21.2",
