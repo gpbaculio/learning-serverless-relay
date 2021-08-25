@@ -6,7 +6,10 @@ const query = new GraphQLObjectType({
   fields: () => ({
     viewer: {
       type: GraphQLViewerType,
-      resolve: () => 'guest',
+      resolve: () => ({
+        id: "guest-id",
+        user: "guest",
+      }),
     },
   }),
 });

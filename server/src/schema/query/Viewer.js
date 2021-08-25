@@ -48,7 +48,7 @@ const GraphQLViewerType = new GraphQLObjectType({
     id: globalIdField("Viewer"),
     user: {
       type: new GraphQLNonNull(GraphQLString),
-      resolve: (user) => user,
+      resolve: (user) => user.user,
     },
     listings: {
       type: listingsConnection,
