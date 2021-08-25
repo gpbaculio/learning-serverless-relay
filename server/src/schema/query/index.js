@@ -1,13 +1,12 @@
-const { GraphQLObjectType, GraphQLString } = require("graphql");
+const { GraphQLObjectType } = require("graphql");
+const GraphQLViewerType = require("./Viewer");
 
 const query = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
     viewer: {
-      type: GraphQLString,
-      resolve: () => {
-        return "teste dited724 asdasd726";
-      },
+      type: GraphQLViewerType,
+      resolve: () => 'guest',
     },
   }),
 });
