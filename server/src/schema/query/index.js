@@ -1,4 +1,5 @@
 const { GraphQLObjectType } = require("graphql");
+
 const GraphQLViewerType = require("./Viewer");
 
 const query = new GraphQLObjectType({
