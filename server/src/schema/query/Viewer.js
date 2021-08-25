@@ -33,7 +33,7 @@ const GraphQLListType = new GraphQLObjectType({
       resolve: ({ num_comments }) => num_comments,
     },
     created: {
-      type: GraphQLString,
+      type: GraphQLInt,
       resolve: ({ created }) => created,
     },
   }),
