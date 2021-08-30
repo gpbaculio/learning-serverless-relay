@@ -59,7 +59,8 @@ const DrawerGraphQL = graphql`
 export const DrawerContainer = styled(animated.div)`
   ${({ theme }) => `background-color:${theme.background};`}
   height: 100%;
-  overflow-y: scroll;
   padding-left: 12px;
   padding-right: 12px;
+  display: flex;
+  flex-direction: column;
 `;
