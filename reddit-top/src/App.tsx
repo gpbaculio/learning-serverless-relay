@@ -1,15 +1,27 @@
 import { Suspense } from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
+import { StyledElements } from "./components";
 import Drawer from "./Drawer";
+import { DrawerContainer } from "./Drawer/Drawer";
+import theme from "./theme";
+
+const { StyledH1 } = StyledElements;
 
 function App() {
   return (
-    <Container className='App'>
-      <Suspense fallback={<h1>Loading Listings...</h1>}>
-        <Drawer />
-      </Suspense>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container className='App'>
+        <Suspense
+          fallback={
+            <DrawerContainer>
+              <StyledH1>Loading Listings...</StyledH1>
+            </DrawerContainer>
+          }>
+          <Drawer />
+        </Suspense>
+      </Container>
+    </ThemeProvider>
   );
 }
 
