@@ -1,5 +1,5 @@
 const theme = {
-  orange: "#FF4500",
+  orange: "orange",
   white: "#ffffff",
   time: "#f5f5f5",
   background: "#000000",

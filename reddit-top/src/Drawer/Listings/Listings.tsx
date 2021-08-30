@@ -47,6 +47,8 @@ export default Listings;
 const StyledUl = styled.ul`
   padding: 0;
   margin: 0;
+  overflow-y: scroll;
+  flex: 1;
 `;
 
 const ListingsGraphQL = graphql`
