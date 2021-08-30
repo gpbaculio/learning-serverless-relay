@@ -33,6 +33,16 @@ query DrawerQuery(
   }
 }
 
+fragment ListingFragmentGraphQL_listing on List {
+  id
+  title
+  created
+  num_comments
+  thumbnail
+  author
+  name
+}
+
 fragment ListingsPagination_viewer_1Bmzm5 on Viewer {
   listings(first: 7, id: $id) {
     pageInfo {
@@ -45,12 +55,7 @@ fragment ListingsPagination_viewer_1Bmzm5 on Viewer {
       cursor
       node {
         id
-        title
-        created
-        num_comments
-        thumbnail
-        author
-        name
+        ...ListingFragmentGraphQL_listing
         __typename
       }
     }
@@ -286,12 +291,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5afad2fdbfffa616d8a7fead2ef7d561",
+    "cacheID": "23e2e21b7bffce2028f6b7d373d08b77",
     "id": null,
     "metadata": {},
     "name": "DrawerQuery",
     "operationKind": "query",
-    "text": "query DrawerQuery(\n  $id: String\n) {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer_1Bmzm5\n  }\n}\n\nfragment ListingsPagination_viewer_1Bmzm5 on Viewer {\n  listings(first: 7, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        title\n        created\n        num_comments\n        thumbnail\n        author\n        name\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query DrawerQuery(\n  $id: String\n) {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer_1Bmzm5\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_1Bmzm5 on Viewer {\n  listings(first: 7, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();

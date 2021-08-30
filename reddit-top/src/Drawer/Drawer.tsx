@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { graphql } from "babel-plugin-relay/macro";
-import { useLazyLoadQuery } from "react-relay";
+import { useLazyLoadQuery, graphql } from "react-relay";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import { useSwipeable } from "react-swipeable";
 
+import Header from "./Header";
 import Listings from "./Listings";
 
-import { DrawerQuery } from "./__generated__/DrawerQuery.graphql";
+import { DrawerQuery } from "../__generated__/DrawerQuery.graphql";
 
 const Drawer = () => {
   const { viewer } = useLazyLoadQuery<DrawerQuery>(DrawerGraphQL, {});
@@ -37,9 +37,10 @@ const Drawer = () => {
   });
 
   return (
-    <Container {...{ style: styles, ...handlers, ref: containerRef }}>
+    <DrawerContainer {...{ style: styles, ...handlers, ref: containerRef }}>
+      <Header />
       {viewer && <Listings viewer={viewer} />}
-    </Container>
+    </DrawerContainer>
   );
 };
 
@@ -55,8 +56,10 @@ const DrawerGraphQL = graphql`
   }
 `;
 
-const Container = styled(animated.div)`
+export const DrawerContainer = styled(animated.div)`
+  ${({ theme }) => `background-color:${theme.background};`}
   height: 100%;
-  background-color: red;
   overflow-y: scroll;
+  padding-left: 12px;
+  padding-right: 12px;
 `;
