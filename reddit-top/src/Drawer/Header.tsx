@@ -1,9 +1,9 @@
 import { StyledElements } from "../components";
 
-const { StyledH1 } = StyledElements;
+const { StyledH2 } = StyledElements;
 
 const Header = () => {
-  return <StyledH1>Reddit Posts</StyledH1>;
+  return <StyledH2>Reddit Posts</StyledH2>;
 };
 
 export default Header;

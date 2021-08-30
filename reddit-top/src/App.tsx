@@ -6,7 +6,7 @@ import Drawer from "./Drawer";
 import { DrawerContainer } from "./Drawer/Drawer";
 import theme from "./theme";
 
-const { StyledH1 } = StyledElements;
+const { StyledH2 } = StyledElements;
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Suspense
           fallback={
             <DrawerContainer>
-              <StyledH1>Loading Listings...</StyledH1>
+              <StyledH2>Loading Listings...</StyledH2>
             </DrawerContainer>
           }>
           <Drawer />
