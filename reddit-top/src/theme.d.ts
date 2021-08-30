@@ -7,5 +7,6 @@ declare module "styled-components" {
     time: string;
     background: string;
     dot: string;
+    circle: string;
   }
 }
