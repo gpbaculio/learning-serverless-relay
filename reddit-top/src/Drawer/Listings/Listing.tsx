@@ -5,9 +5,30 @@ import styled from "styled-components";
 
 import { ListingFragmentGraphQL_listing$key } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
+import { timeAgo } from "./helpers";
+
 interface ListProps {
   listing: ListingFragmentGraphQL_listing$key;
 }
+
+const UnReadCircle = styled.div`
+  ${({ theme }) => `background-color:${theme.circle};`}
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+`;
+
+const TopSection = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Author = styled.span`
+  ${({ theme }) => `color:${theme.white};`}
+  font-size: 18px;
+  margin-left: 12px;
+  margin-right: 12px;
+`;
 
 const Listing = ({ listing }: ListProps) => {
   const [read, setRead] = useState(false);
@@ -26,7 +47,6 @@ const Listing = ({ listing }: ListProps) => {
       duration: 500,
     },
   });
-
   console.log("node: ", node);
 
   return (
@@ -35,7 +55,11 @@ const Listing = ({ listing }: ListProps) => {
       onClick={() => {
         setDimiss(true);
       }}>
-      {node.author}
+      <TopSection>
+        {!read && <UnReadCircle />}
+        <Author>{node.author}</Author>
+        <span>{timeAgo(new Date((node.created as number) * 1000))}</span>
+      </TopSection>
     </StyledAnimatedLi>
   );
 };
