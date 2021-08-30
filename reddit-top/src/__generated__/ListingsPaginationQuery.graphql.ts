@@ -34,6 +34,16 @@ query ListingsPaginationQuery(
   }
 }
 
+fragment ListingFragmentGraphQL_listing on List {
+  id
+  title
+  created
+  num_comments
+  thumbnail
+  author
+  name
+}
+
 fragment ListingsPagination_viewer_3T5kGn on Viewer {
   listings(first: $count, after: $cursor, id: $id) {
     pageInfo {
@@ -46,12 +56,7 @@ fragment ListingsPagination_viewer_3T5kGn on Viewer {
       cursor
       node {
         id
-        title
-        created
-        num_comments
-        thumbnail
-        author
-        name
+        ...ListingFragmentGraphQL_listing
         __typename
       }
     }
@@ -302,14 +307,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c35fedbcef4ef1266e8b85d91e2fe12c",
+    "cacheID": "a9b6f47bb808c3db5da6c8f122cba1ae",
     "id": null,
     "metadata": {},
     "name": "ListingsPaginationQuery",
     "operationKind": "query",
-    "text": "query ListingsPaginationQuery(\n  $count: Int = 7\n  $cursor: String\n  $id: String\n) {\n  viewer {\n    ...ListingsPagination_viewer_3T5kGn\n    id\n  }\n}\n\nfragment ListingsPagination_viewer_3T5kGn on Viewer {\n  listings(first: $count, after: $cursor, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        title\n        created\n        num_comments\n        thumbnail\n        author\n        name\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query ListingsPaginationQuery(\n  $count: Int = 7\n  $cursor: String\n  $id: String\n) {\n  viewer {\n    ...ListingsPagination_viewer_3T5kGn\n    id\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_3T5kGn on Viewer {\n  listings(first: $count, after: $cursor, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f2923cc0acb673800902bc6bfb6e3bdb';
+(node as any).hash = '2872500cd646d1ef0ed8326106ab133e';
 export default node;

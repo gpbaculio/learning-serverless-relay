@@ -17,12 +17,7 @@ export type ListingsPagination_viewer = {
             readonly cursor: string;
             readonly node: {
                 readonly id: string;
-                readonly title: string | null;
-                readonly created: number | null;
-                readonly num_comments: number | null;
-                readonly thumbnail: string | null;
-                readonly author: string | null;
-                readonly name: string | null;
+                readonly " $fragmentRefs": FragmentRefs<"ListingFragmentGraphQL_listing">;
             } | null;
         } | null> | null;
     } | null;
@@ -172,50 +167,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "created",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "num_comments",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "thumbnail",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "author",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ListingFragmentGraphQL_listing"
                 }
               ],
               "storageKey": null
@@ -231,5 +189,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f2923cc0acb673800902bc6bfb6e3bdb';
+(node as any).hash = '2872500cd646d1ef0ed8326106ab133e';
 export default node;
