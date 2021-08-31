@@ -86,13 +86,13 @@ const Listing = ({ listing }: ListProps) => {
     config: dismissConfig,
   });
 
-  const onDismissMouseEnter = () => {
+  const onDismissMouseEnter = useCallback(() => {
     setHasEnteredDismiss(true);
-  };
+  }, [setHasEnteredDismiss]);
 
-  const onDismissMouseLeave = () => {
+  const onDismissMouseLeave = useCallback(() => {
     setHasEnteredDismiss(false);
-  };
+  }, [setHasEnteredDismiss]);
 
   const onListingImageLoad = () => {
     setisImageLoaded(true);
