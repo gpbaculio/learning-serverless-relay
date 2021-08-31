@@ -20,6 +20,10 @@ interface ListProps {
   listing: ListingFragmentGraphQL_listing$key;
 }
 
+const dismissConfig = {
+  duration: 50,
+};
+
 const Listing = ({ listing }: ListProps) => {
   const environment = useRelayEnvironment();
   const node = useFragment(ListingFragmentGraphQL, listing);
@@ -69,6 +73,19 @@ const Listing = ({ listing }: ListProps) => {
     updateNode(true, "isRead");
   }, [updateNode]);
 
+  const [hasEnteredDismiss, setHasEnteredDismiss] = useState(false);
+
+  const dismissSpanStyle = useSpring({
+    fontWeight: hasEnteredDismiss ? 600 : 400,
+    config: dismissConfig,
+  });
+
+  const xIconStyle = useSpring({
+    width: hasEnteredDismiss ? 18.5 : 18,
+    height: hasEnteredDismiss ? 18.5 : 18,
+    config: dismissConfig,
+  });
+
   return (
     <StyledAnimatedLi ref={liRef} style={style} onClick={onRead}>
       <TopSection>
@@ -87,9 +104,16 @@ const Listing = ({ listing }: ListProps) => {
         <ChevronRight size={18} />
       </Body>
       <BottomSection>
-        <DismissPost onClick={onDismiss}>
-          <XIcon size={18} />
-          <StyledSpan>Dismiss Post</StyledSpan>
+        <DismissPost
+          onMouseEnter={() => {
+            setHasEnteredDismiss(true);
+          }}
+          onMouseLeave={() => {
+            setHasEnteredDismiss(false);
+          }}
+          onClick={onDismiss}>
+          <XIcon style={xIconStyle} />
+          <StyledSpan style={dismissSpanStyle}>Dismiss Post</StyledSpan>
         </DismissPost>
         <NumComments>{node.num_comments} comments</NumComments>
       </BottomSection>
@@ -103,16 +127,31 @@ const NumComments = styled.span`
   ${({ theme }) => `color:${theme.orange};`}
 `;
 
-const StyledSpan = styled.span`
+const StyledSpan = styled(animated.span)`
   color: #ffffff;
 `;
 
-const XIcon = styled(BsXCircle)`
+const XIcon = styled(animated(BsXCircle))`
   ${({ theme }) => `color:${theme.orange};`}
   margin-right: 6px;
 `;
 
-const DismissPost = styled.div`
+const StyledAnimatedLi = styled(animated.li)`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  cursor: pointer;
+  &:hover {
+    background-color: #323232;
+  }
+`;
+
+const DismissPost = styled(animated.div)`
   cursor: pointer;
   align-items: center;
   flex-direction: row;
@@ -173,18 +212,6 @@ const Time = styled.span`
   ${({ theme }) => `color:${theme.time};`}
   font-size: 14px;
   align-self: center;
-`;
-
-const StyledAnimatedLi = styled(animated.li)`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  &:hover {
-    background-color: #323232;
-  }
 `;
 
 const ListingFragmentGraphQL = graphql`
