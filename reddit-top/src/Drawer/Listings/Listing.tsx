@@ -54,15 +54,23 @@ const Listing = ({ listing }: ListProps) => {
         }
       });
     },
-    [commitLocalUpdate, environment]
+    [environment, node.id]
   );
 
-  const onDismiss = useCallback(() => {
-    updateNode(true, "isDismissed");
+  const onDismiss = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      event.stopPropagation();
+      updateNode(true, "isDismissed");
+    },
+    [updateNode]
+  );
+
+  const onRead = useCallback(() => {
+    updateNode(true, "isRead");
   }, [updateNode]);
 
   return (
-    <StyledAnimatedLi ref={liRef} style={style}>
+    <StyledAnimatedLi ref={liRef} style={style} onClick={onRead}>
       <TopSection>
         {!node.isRead && <UnReadCircle size={12} />}
         <Author>{node.author}</Author>
