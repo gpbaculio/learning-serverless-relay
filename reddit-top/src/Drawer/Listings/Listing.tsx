@@ -45,6 +45,11 @@ const Listing = ({ listing }: ListProps) => {
     opacity: node.isDismissed ? 0 : 1,
     fontSize: `${node.isDismissed ? 0 : 18}px`,
     transform: `translateX(${node.isDismissed ? -100 : 0}px)`,
+    marginTop: `${node.isDismissed ? 0 : 12}px`,
+    marginBottom: `${node.isDismissed ? 0 : 12}px`,
+    paddingTop: `${node.isDismissed ? 0 : 6}px`,
+    paddingBottom: `${node.isDismissed ? 0 : 6}px`,
+    paddingLeft: `${node.isDismissed ? 0 : 6}px`,
     config: {
       duration: 500,
     },
@@ -145,11 +150,6 @@ const StyledAnimatedLi = styled(animated.li)`
   list-style: none;
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 6px;
   cursor: pointer;
   &:hover {
     background-color: #323232;
