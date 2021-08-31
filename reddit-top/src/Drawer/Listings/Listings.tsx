@@ -51,16 +51,18 @@ const Listings = ({ viewer }: ListingsProps) => {
             }
             return null;
           })}
+        {hasNext && (
+          <li>
+            <button
+              disabled={isLoadingNext}
+              onClick={() => {
+                loadNext(7);
+              }}>
+              loadNext
+            </button>
+          </li>
+        )}
       </StyledUl>
-      {hasNext && (
-        <button
-          disabled={isLoadingNext}
-          onClick={() => {
-            loadNext(7);
-          }}>
-          loadNext
-        </button>
-      )}
     </>
   );
 };
