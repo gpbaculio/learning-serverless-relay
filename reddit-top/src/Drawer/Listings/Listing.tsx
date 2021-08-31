@@ -49,7 +49,7 @@ const Listing = ({ listing }: ListProps) => {
     commitLocalUpdate(environment, (store) => {
       const list = store.get<ListingFragmentGraphQL_listing$data>(node.id);
       if (list) {
-        list.setValue(false, "isDismissed");
+        list.setValue(true, "isDismissed");
       }
     });
   }, [environment, node.id, commitLocalUpdate]);
