@@ -109,6 +109,7 @@ const StyledSpan = styled.span`
 
 const XIcon = styled(BsXCircle)`
   ${({ theme }) => `color:${theme.orange};`}
+  margin-right: 6px;
 `;
 
 const DismissPost = styled.div`
@@ -180,6 +181,10 @@ const StyledAnimatedLi = styled(animated.li)`
   flex-direction: column;
   margin-top: 12px;
   margin-bottom: 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: #323232;
+  }
 `;
 
 const ListingFragmentGraphQL = graphql`
