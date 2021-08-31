@@ -13,6 +13,8 @@ export type ListingFragmentGraphQL_listing = {
     readonly thumbnail: string | null;
     readonly author: string | null;
     readonly name: string | null;
+    readonly isDismissed: boolean | null;
+    readonly isRead: boolean | null;
     readonly " $refType": "ListingFragmentGraphQL_listing";
 };
 export type ListingFragmentGraphQL_listing$data = ListingFragmentGraphQL_listing;
@@ -77,10 +79,29 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
+    },
+    {
+      "kind": "ClientExtension",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isDismissed",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isRead",
+          "storageKey": null
+        }
+      ]
     }
   ],
   "type": "List",
   "abstractKey": null
 };
-(node as any).hash = 'f1882fa93de0f3be783cb53ff374e58e';
+(node as any).hash = '9d0ffde6a2e684d2bf33ce87fffc656a';
 export default node;
