@@ -45,14 +45,21 @@ const Listing = ({ listing }: ListProps) => {
     },
   });
 
+  const updateNode = useCallback(
+    (value: boolean, key: "isDismissed" | "isRead") => {
+      commitLocalUpdate(environment, (store) => {
+        const list = store.get<ListingFragmentGraphQL_listing$data>(node.id);
+        if (list) {
+          list.setValue(value, key);
+        }
+      });
+    },
+    [commitLocalUpdate, environment]
+  );
+
   const onDismiss = useCallback(() => {
-    commitLocalUpdate(environment, (store) => {
-      const list = store.get<ListingFragmentGraphQL_listing$data>(node.id);
-      if (list) {
-        list.setValue(false, "isDismissed");
-      }
-    });
-  }, [environment, node.id, commitLocalUpdate]);
+    updateNode(true, "isDismissed");
+  }, [updateNode]);
 
   return (
     <StyledAnimatedLi ref={liRef} style={style}>
