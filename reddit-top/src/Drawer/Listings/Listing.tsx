@@ -39,7 +39,7 @@ const Listing = ({ listing }: ListProps) => {
     }
   }, [liRef, isImageLoaded]);
 
-  const style = useSpring({
+  const liStyle = useSpring({
     ...(height !== 0 && { height: `${node.isDismissed ? 0 : height}px` }),
     opacity: node.isDismissed ? 0 : 1,
     fontSize: `${node.isDismissed ? 0 : 18}px`,
@@ -86,8 +86,20 @@ const Listing = ({ listing }: ListProps) => {
     config: dismissConfig,
   });
 
+  const onDismissMouseEnter = () => {
+    setHasEnteredDismiss(true);
+  };
+
+  const onDismissMouseLeave = () => {
+    setHasEnteredDismiss(false);
+  };
+
+  const onListingImageLoad = () => {
+    setisImageLoaded(true);
+  };
+
   return (
-    <StyledAnimatedLi ref={liRef} style={style} onClick={onRead}>
+    <StyledAnimatedLi ref={liRef} style={liStyle} onClick={onRead}>
       <TopSection>
         {!node.isRead && <UnReadCircle size={12} />}
         <Author>{node.author}</Author>
@@ -96,21 +108,15 @@ const Listing = ({ listing }: ListProps) => {
       <Body>
         <ListingImage
           src={node.thumbnail as string}
-          onLoad={() => {
-            setisImageLoaded(true);
-          }}
+          onLoad={onListingImageLoad}
         />
         <Title>{node.title}</Title>
         <ChevronRight size={18} />
       </Body>
       <BottomSection>
         <DismissPost
-          onMouseEnter={() => {
-            setHasEnteredDismiss(true);
-          }}
-          onMouseLeave={() => {
-            setHasEnteredDismiss(false);
-          }}
+          onMouseEnter={onDismissMouseEnter}
+          onMouseLeave={onDismissMouseLeave}
           onClick={onDismiss}>
           <XIcon style={xIconStyle} />
           <StyledSpan style={dismissSpanStyle}>Dismiss Post</StyledSpan>
