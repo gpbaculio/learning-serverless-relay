@@ -1,10 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { graphql, useFragment } from "react-relay";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  commitLocalUpdate,
+  graphql,
+  useFragment,
+  useRelayEnvironment,
+} from "react-relay";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { BsCircleFill, BsChevronRight, BsXCircle } from "react-icons/bs";
 
-import { ListingFragmentGraphQL_listing$key } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
+import {
+  ListingFragmentGraphQL_listing$data,
+  ListingFragmentGraphQL_listing$key,
+} from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
 import { timeAgo } from "./helpers";
 
@@ -13,12 +21,11 @@ interface ListProps {
 }
 
 const Listing = ({ listing }: ListProps) => {
+  const environment = useRelayEnvironment();
   const node = useFragment(ListingFragmentGraphQL, listing);
 
   const liRef = useRef<HTMLLIElement>(null);
-  const [read, setRead] = useState(false);
   const [height, setHeight] = useState(0);
-  const [dismiss, setDimiss] = useState(false);
   const [isImageLoaded, setisImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -29,19 +36,28 @@ const Listing = ({ listing }: ListProps) => {
   }, [liRef, isImageLoaded]);
 
   const style = useSpring({
-    ...(height !== 0 && { height: `${dismiss ? 0 : height}px` }),
-    opacity: dismiss ? 0 : 1,
-    fontSize: `${dismiss ? 0 : 18}px`,
-    transform: `translateX(${dismiss ? -100 : 0}px)`,
+    ...(height !== 0 && { height: `${node.isDismissed ? 0 : height}px` }),
+    opacity: node.isDismissed ? 0 : 1,
+    fontSize: `${node.isDismissed ? 0 : 18}px`,
+    transform: `translateX(${node.isDismissed ? -100 : 0}px)`,
     config: {
       duration: 500,
     },
   });
 
+  const onDismiss = useCallback(() => {
+    commitLocalUpdate(environment, (store) => {
+      const list = store.get<ListingFragmentGraphQL_listing$data>(node.id);
+      if (list) {
+        list.setValue(false, "isDismissed");
+      }
+    });
+  }, [environment, node.id, commitLocalUpdate]);
+
   return (
     <StyledAnimatedLi ref={liRef} style={style}>
       <TopSection>
-        {!read && <UnReadCircle size={12} />}
+        {!node.isRead && <UnReadCircle size={12} />}
         <Author>{node.author}</Author>
         <Time>{timeAgo(new Date((node.created as number) * 1000))}</Time>
       </TopSection>
@@ -56,10 +72,7 @@ const Listing = ({ listing }: ListProps) => {
         <ChevronRight size={18} />
       </Body>
       <BottomSection>
-        <DismissPost
-          onClick={() => {
-            setDimiss(true);
-          }}>
+        <DismissPost onClick={onDismiss}>
           <XIcon size={18} />
           <StyledSpan>Dismiss Post</StyledSpan>
         </DismissPost>
@@ -163,5 +176,7 @@ const ListingFragmentGraphQL = graphql`
     thumbnail
     author
     name
+    isDismissed
+    isRead
   }
 `;

@@ -1,0 +1,4 @@
+extend type List {
+  isDismissed: Boolean
+  isRead: Boolean
+}
