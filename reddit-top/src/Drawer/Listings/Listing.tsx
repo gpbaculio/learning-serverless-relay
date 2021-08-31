@@ -29,6 +29,7 @@ const Listing = ({ listing }: ListProps) => {
   const node = useFragment(ListingFragmentGraphQL, listing);
 
   const liRef = useRef<HTMLLIElement>(null);
+  const [hasEnteredDismiss, setHasEnteredDismiss] = useState(false);
   const [height, setHeight] = useState(0);
   const [isImageLoaded, setisImageLoaded] = useState(false);
 
@@ -72,8 +73,6 @@ const Listing = ({ listing }: ListProps) => {
   const onRead = useCallback(() => {
     updateNode(true, "isRead");
   }, [updateNode]);
-
-  const [hasEnteredDismiss, setHasEnteredDismiss] = useState(false);
 
   const dismissSpanStyle = useSpring({
     fontWeight: hasEnteredDismiss ? 600 : 400,
