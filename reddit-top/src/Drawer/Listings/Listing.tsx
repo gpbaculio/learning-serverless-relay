@@ -90,7 +90,11 @@ const Listing = ({ listing }: ListProps) => {
   };
 
   return (
-    <StyledAnimatedLi ref={liRef} style={liStyle} onClick={onRead}>
+    <StyledAnimatedLi
+      data-testid={`@test:list:${node.id}`}
+      ref={liRef}
+      style={liStyle}
+      onClick={onRead}>
       <TopSection>
         {!node.isRead && <UnReadCircle size={12} />}
         <Author>{node.author}</Author>
@@ -106,6 +110,7 @@ const Listing = ({ listing }: ListProps) => {
       </Body>
       <BottomSection>
         <DismissPost
+          data-testid={`@test:dismiss:list:${node.id}`}
           onMouseEnter={onDismissMouseEnter}
           onMouseLeave={onDismissMouseLeave}
           onClick={onDismiss}>
