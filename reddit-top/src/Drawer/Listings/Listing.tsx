@@ -1,30 +1,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  commitLocalUpdate,
-  graphql,
-  useFragment,
-  useRelayEnvironment,
-} from "react-relay";
+import { graphql, useFragment, useRelayEnvironment } from "react-relay";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { BsCircleFill, BsChevronRight, BsXCircle } from "react-icons/bs";
 
-import {
-  ListingFragmentGraphQL_listing$data,
-  ListingFragmentGraphQL_listing$key,
-} from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
+import { ListingFragmentGraphQL_listing$key } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
-import { timeAgo } from "./helpers";
+import { ListKToUpdate, listUpdater, timeAgo } from "./helpers";
 
 interface ListProps {
   listing: ListingFragmentGraphQL_listing$key;
 }
+
+const dismissConfig = {
+  duration: 50,
+};
 
 const Listing = ({ listing }: ListProps) => {
   const environment = useRelayEnvironment();
   const node = useFragment(ListingFragmentGraphQL, listing);
 
   const liRef = useRef<HTMLLIElement>(null);
+  const [hasEnteredDismiss, setHasEnteredDismiss] = useState(false);
   const [height, setHeight] = useState(0);
   const [isImageLoaded, setisImageLoaded] = useState(false);
 
@@ -35,24 +32,24 @@ const Listing = ({ listing }: ListProps) => {
     }
   }, [liRef, isImageLoaded]);
 
-  const style = useSpring({
+  const liStyle = useSpring({
     ...(height !== 0 && { height: `${node.isDismissed ? 0 : height}px` }),
     opacity: node.isDismissed ? 0 : 1,
     fontSize: `${node.isDismissed ? 0 : 18}px`,
     transform: `translateX(${node.isDismissed ? -100 : 0}px)`,
+    marginTop: `${node.isDismissed ? 0 : 12}px`,
+    marginBottom: `${node.isDismissed ? 0 : 12}px`,
+    paddingTop: `${node.isDismissed ? 0 : 6}px`,
+    paddingBottom: `${node.isDismissed ? 0 : 6}px`,
+    paddingLeft: `${node.isDismissed ? 0 : 6}px`,
     config: {
       duration: 500,
     },
   });
 
   const updateNode = useCallback(
-    (value: boolean, key: "isDismissed" | "isRead") => {
-      commitLocalUpdate(environment, (store) => {
-        const list = store.get<ListingFragmentGraphQL_listing$data>(node.id);
-        if (list) {
-          list.setValue(value, key);
-        }
-      });
+    (value: boolean, k: ListKToUpdate | ListKToUpdate[]) => {
+      listUpdater(environment, value, k, node.id);
     },
     [environment, node.id]
   );
@@ -69,8 +66,31 @@ const Listing = ({ listing }: ListProps) => {
     updateNode(true, "isRead");
   }, [updateNode]);
 
+  const dismissSpanStyle = useSpring({
+    fontWeight: hasEnteredDismiss ? 600 : 400,
+    config: dismissConfig,
+  });
+
+  const xIconStyle = useSpring({
+    width: hasEnteredDismiss ? 18.5 : 18,
+    height: hasEnteredDismiss ? 18.5 : 18,
+    config: dismissConfig,
+  });
+
+  const onDismissMouseEnter = useCallback(() => {
+    setHasEnteredDismiss(true);
+  }, [setHasEnteredDismiss]);
+
+  const onDismissMouseLeave = useCallback(() => {
+    setHasEnteredDismiss(false);
+  }, [setHasEnteredDismiss]);
+
+  const onListingImageLoad = () => {
+    setisImageLoaded(true);
+  };
+
   return (
-    <StyledAnimatedLi ref={liRef} style={style} onClick={onRead}>
+    <StyledAnimatedLi ref={liRef} style={liStyle} onClick={onRead}>
       <TopSection>
         {!node.isRead && <UnReadCircle size={12} />}
         <Author>{node.author}</Author>
@@ -79,17 +99,18 @@ const Listing = ({ listing }: ListProps) => {
       <Body>
         <ListingImage
           src={node.thumbnail as string}
-          onLoad={() => {
-            setisImageLoaded(true);
-          }}
+          onLoad={onListingImageLoad}
         />
         <Title>{node.title}</Title>
         <ChevronRight size={18} />
       </Body>
       <BottomSection>
-        <DismissPost onClick={onDismiss}>
-          <XIcon size={18} />
-          <StyledSpan>Dismiss Post</StyledSpan>
+        <DismissPost
+          onMouseEnter={onDismissMouseEnter}
+          onMouseLeave={onDismissMouseLeave}
+          onClick={onDismiss}>
+          <XIcon style={xIconStyle} />
+          <StyledSpan style={dismissSpanStyle}>Dismiss Post</StyledSpan>
         </DismissPost>
         <NumComments>{node.num_comments} comments</NumComments>
       </BottomSection>
@@ -103,15 +124,26 @@ const NumComments = styled.span`
   ${({ theme }) => `color:${theme.orange};`}
 `;
 
-const StyledSpan = styled.span`
+const StyledSpan = styled(animated.span)`
   color: #ffffff;
 `;
 
-const XIcon = styled(BsXCircle)`
+const XIcon = styled(animated(BsXCircle))`
   ${({ theme }) => `color:${theme.orange};`}
+  margin-right: 6px;
 `;
 
-const DismissPost = styled.div`
+const StyledAnimatedLi = styled(animated.li)`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  &:hover {
+    background-color: #323232;
+  }
+`;
+
+const DismissPost = styled(animated.div)`
   cursor: pointer;
   align-items: center;
   flex-direction: row;
@@ -172,14 +204,6 @@ const Time = styled.span`
   ${({ theme }) => `color:${theme.time};`}
   font-size: 14px;
   align-self: center;
-`;
-
-const StyledAnimatedLi = styled(animated.li)`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
-  margin-bottom: 12px;
 `;
 
 const ListingFragmentGraphQL = graphql`

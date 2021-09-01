@@ -1,3 +1,7 @@
+import { commitLocalUpdate } from "react-relay";
+import { Environment } from "relay-runtime";
+
+import { ListingFragmentGraphQL_listing$data } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 import { DateTime, DurationObjectUnits, DurationUnit } from "luxon";
 
 export const timeAgo = (date: Date) => {
@@ -23,4 +27,26 @@ export const timeAgo = (date: Date) => {
     Math.trunc(diff.as(unit as keyof DurationObjectUnits)),
     unit
   );
+};
+
+export type ListKToUpdate = "isDismissed" | "isRead";
+
+export const listUpdater = (
+  environment: Environment,
+  value: boolean,
+  k: ListKToUpdate | ListKToUpdate[],
+  nodeId: string
+) => {
+  commitLocalUpdate(environment, (store) => {
+    const list = store.get<ListingFragmentGraphQL_listing$data>(nodeId);
+    if (list) {
+      if (typeof k === "string") {
+        list.setValue(value, k);
+      } else {
+        k.forEach((j) => {
+          list.setValue(value, j);
+        });
+      }
+    }
+  });
 };
