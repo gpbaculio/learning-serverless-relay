@@ -11,7 +11,6 @@ import {
   MockPayloadGenerator,
   RelayMockEnvironment,
 } from "relay-test-utils";
-import { Globals } from "react-spring";
 
 import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
@@ -21,10 +20,15 @@ import {
   ListingFragmentGraphQL_listing,
   ListingFragmentGraphQL_listing$data,
 } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
-import { Record } from "relay-runtime";
 
 const { listings: initialMockListings } = MockDrawerViewer();
 const { listings: nextMockListings } = MockDrawerNextViewer();
+
+const getNode = (environment: RelayMockEnvironment, nodeId: string) =>
+  environment
+    .getStore()
+    .getSource()
+    .get<ListingFragmentGraphQL_listing$data>(nodeId);
 
 describe("Drawer Tests", () => {
   let screen: RenderResult;
@@ -32,9 +36,6 @@ describe("Drawer Tests", () => {
   let environment: RelayMockEnvironment;
 
   beforeEach(() => {
-    Globals.assign({
-      skipAnimation: true,
-    });
     environment = createMockEnvironment();
 
     environment.mock.queueOperationResolver((operation) =>
@@ -120,20 +121,14 @@ describe("Drawer Tests", () => {
         `@test:dismiss:list:${edge.node.id}`
       );
 
-      const list = environment
-        .getStore()
-        .getSource()
-        .get<ListingFragmentGraphQL_listing$data>(edge.node.id);
+      const list = getNode(environment, edge.node.id);
       expect(list).toBeTruthy();
       expect(list && list.isDismissed).toBeFalsy();
 
       expect(dismissBtn).toBeTruthy();
       fireEvent.click(dismissBtn);
 
-      const listOnDismissClick = environment
-        .getStore()
-        .getSource()
-        .get<ListingFragmentGraphQL_listing$data>(edge.node.id);
+      const listOnDismissClick = getNode(environment, edge.node.id);
       expect(listOnDismissClick).toBeTruthy();
       expect(listOnDismissClick && listOnDismissClick.isDismissed).toBeTruthy();
     });
