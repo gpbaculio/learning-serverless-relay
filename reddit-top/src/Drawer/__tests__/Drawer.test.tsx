@@ -120,17 +120,22 @@ describe("Drawer Tests", () => {
         `@test:dismiss:list:${edge.node.id}`
       );
 
-      expect(dismissBtn).toBeTruthy();
-
-      fireEvent.click(dismissBtn);
-
       const list = environment
         .getStore()
         .getSource()
         .get<ListingFragmentGraphQL_listing$data>(edge.node.id);
-
       expect(list).toBeTruthy();
-      expect(list && list.isDismissed).toBeTruthy();
+      expect(list && list.isDismissed).toBeFalsy();
+
+      expect(dismissBtn).toBeTruthy();
+      fireEvent.click(dismissBtn);
+
+      const listOnDismissClick = environment
+        .getStore()
+        .getSource()
+        .get<ListingFragmentGraphQL_listing$data>(edge.node.id);
+      expect(listOnDismissClick).toBeTruthy();
+      expect(listOnDismissClick && listOnDismissClick.isDismissed).toBeTruthy();
     });
   });
 });
