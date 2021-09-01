@@ -14,12 +14,8 @@ import {
 
 import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
-import { listUpdater } from "../Listings/helpers";
 import { MockDrawerNextViewer, MockDrawerViewer } from "../test.constants";
-import {
-  ListingFragmentGraphQL_listing,
-  ListingFragmentGraphQL_listing$data,
-} from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
+import { ListingFragmentGraphQL_listing$data } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
 const { listings: initialMockListings } = MockDrawerViewer();
 const { listings: nextMockListings } = MockDrawerNextViewer();
