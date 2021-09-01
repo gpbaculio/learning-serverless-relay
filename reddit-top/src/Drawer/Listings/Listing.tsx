@@ -96,7 +96,12 @@ const Listing = ({ listing }: ListProps) => {
       style={liStyle}
       onClick={onRead}>
       <TopSection>
-        {!node.isRead && <UnReadCircle size={12} />}
+        {!node.isRead && (
+          <UnReadCircle
+            size={12}
+            data-testid={`@test:list:${node.id}:unreadcircle`}
+          />
+        )}
         <Author>{node.author}</Author>
         <Time>{timeAgo(new Date((node.created as number) * 1000))}</Time>
       </TopSection>

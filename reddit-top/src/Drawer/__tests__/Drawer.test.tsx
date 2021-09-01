@@ -14,6 +14,7 @@ import {
 
 import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
+import { listUpdater } from "../Listings/helpers";
 import { MockDrawerNextViewer, MockDrawerViewer } from "../test.constants";
 
 const { listings: initialMockListings } = MockDrawerViewer();
@@ -75,6 +76,24 @@ describe("Drawer Tests", () => {
     nextMockListings.edges.forEach((edge) => {
       const li = screen.getByTestId(`@test:list:${edge.node.id}`);
       expect(li).toBeTruthy();
+    });
+  });
+  it("should render Drawer lists and handle read indicator when a list pressed", () => {
+    const ul = screen.getByTestId("@test:listings:ul");
+
+    expect(ul).toBeTruthy();
+
+    initialMockListings.edges.forEach((edge) => {
+      const li = screen.getByTestId(`@test:list:${edge.node.id}`);
+      expect(li).toBeTruthy();
+
+      const unReadCircleTestId = `@test:list:${edge.node.id}:unreadcircle`;
+      const listUnreadCircle = screen.getByTestId(unReadCircleTestId);
+      expect(listUnreadCircle).toBeTruthy();
+
+      fireEvent.click(li);
+
+      expect(screen.queryByTestId(unReadCircleTestId)).toBeFalsy();
     });
   });
 });
