@@ -1,5 +1,4 @@
 import {
-  commitLocalUpdate,
   usePaginationFragment,
   graphql,
   useRelayEnvironment,
@@ -10,8 +9,8 @@ import Listing from "./Listing";
 
 import { ListingsPaginationQuery } from "../../__generated__/ListingsPaginationQuery.graphql";
 import { ListingsPagination_viewer$key } from "../../__generated__/ListingsPagination_viewer.graphql";
-import { ListingFragmentGraphQL_listing$data } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 import { useCallback } from "react";
+import { listUpdater } from "./helpers";
 
 interface ListingsProps {
   viewer: ListingsPagination_viewer$key;
@@ -26,13 +25,7 @@ const Listings = ({ viewer }: ListingsProps) => {
 
   const setNodeLocalDefaultValues = useCallback(
     (id: string) => {
-      commitLocalUpdate(environment, (store) => {
-        const list = store.get<ListingFragmentGraphQL_listing$data>(id);
-        if (list) {
-          list.setValue(false, "isDismissed");
-          list.setValue(false, "isRead");
-        }
-      });
+      listUpdater(environment, false, ["isDismissed", "isRead"], id);
     },
     [environment]
   );

@@ -1,20 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  commitLocalUpdate,
-  graphql,
-  useFragment,
-  useRelayEnvironment,
-} from "react-relay";
+import { graphql, useFragment, useRelayEnvironment } from "react-relay";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { BsCircleFill, BsChevronRight, BsXCircle } from "react-icons/bs";
 
-import {
-  ListingFragmentGraphQL_listing$data,
-  ListingFragmentGraphQL_listing$key,
-} from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
+import { ListingFragmentGraphQL_listing$key } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
-import { timeAgo } from "./helpers";
+import { ListKToUpdate, listUpdater, timeAgo } from "./helpers";
 
 interface ListProps {
   listing: ListingFragmentGraphQL_listing$key;
@@ -56,13 +48,8 @@ const Listing = ({ listing }: ListProps) => {
   });
 
   const updateNode = useCallback(
-    (value: boolean, key: "isDismissed" | "isRead") => {
-      commitLocalUpdate(environment, (store) => {
-        const list = store.get<ListingFragmentGraphQL_listing$data>(node.id);
-        if (list) {
-          list.setValue(value, key);
-        }
-      });
+    (value: boolean, k: ListKToUpdate | ListKToUpdate[]) => {
+      listUpdater(environment, value, k, node.id);
     },
     [environment, node.id]
   );
