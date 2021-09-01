@@ -9,14 +9,17 @@ import Listing from "./Listing";
 
 import { ListingsPaginationQuery } from "../../__generated__/ListingsPaginationQuery.graphql";
 import { ListingsPagination_viewer$key } from "../../__generated__/ListingsPagination_viewer.graphql";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { listUpdater } from "./helpers";
+import { useRef } from "react";
+import { StyledH2 } from "../../components/StyledElements";
 
 interface ListingsProps {
   viewer: ListingsPagination_viewer$key;
 }
 
 const Listings = ({ viewer }: ListingsProps) => {
+  const ulRef = useRef<HTMLUListElement>(null);
   const environment = useRelayEnvironment();
   const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment<
     ListingsPaginationQuery,
@@ -30,33 +33,54 @@ const Listings = ({ viewer }: ListingsProps) => {
     [environment]
   );
 
+  useEffect(() => {
+    let ulRefValue: HTMLUListElement | null = null;
+
+    const onScroll = () => {
+      if (ulRefValue) {
+        console.log(" ulRefValue.scrollHeight: ", ulRefValue.scrollHeight);
+        console.log(" ulRefValue.scrollTop: ", ulRefValue.scrollTop);
+        console.log(" ulRefValue.clientHeight: ", ulRefValue.clientHeight);
+        const isBottom =
+          ulRefValue.scrollHeight - ulRefValue.scrollTop ===
+          ulRefValue.clientHeight;
+        if (isBottom && !isLoadingNext && hasNext) {
+          loadNext(7);
+        }
+      }
+    };
+
+    if (ulRef && ulRef.current) {
+      ulRefValue = ulRef.current;
+      ulRefValue.addEventListener("scroll", onScroll);
+    }
+
+    return () => {
+      if (ulRefValue) {
+        ulRefValue.removeEventListener("scroll", onScroll);
+      }
+    };
+  }, [ulRef, isLoadingNext, hasNext, loadNext]);
+
   return (
-    <>
-      <StyledUl>
-        {data.listings &&
-          data.listings.edges &&
-          data.listings.edges.map((edge, i) => {
-            if (edge && edge.node) {
-              setNodeLocalDefaultValues(edge.node.id);
-              return (
-                <Listing key={`${i}:${edge.node.id}`} listing={edge.node} />
-              );
-            }
-            return null;
-          })}
-        {hasNext && (
-          <li>
-            <button
-              disabled={isLoadingNext}
-              onClick={() => {
-                loadNext(7);
-              }}>
-              loadNext
-            </button>
-          </li>
-        )}
-      </StyledUl>
-    </>
+    <StyledUl ref={ulRef}>
+      {data.listings &&
+        data.listings.edges &&
+        data.listings.edges.map((edge, i) => {
+          if (edge && edge.node) {
+            setNodeLocalDefaultValues(edge.node.id);
+            return <Listing key={`${i}:${edge.node.id}`} listing={edge.node} />;
+          }
+          return null;
+        })}
+      {isLoadingNext && (
+        <li>
+          <StyledH2 data-testid='@test:listings:isLoadingNext'>
+            Loading...
+          </StyledH2>
+        </li>
+      )}
+    </StyledUl>
   );
 };
 
