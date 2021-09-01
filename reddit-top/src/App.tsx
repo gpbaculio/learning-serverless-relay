@@ -15,7 +15,9 @@ function App() {
         <Suspense
           fallback={
             <DrawerContainer>
-              <StyledH2>Loading Listings...</StyledH2>
+              <StyledH2 data-testid='@test:fallback:drawer:loading'>
+                Loading...
+              </StyledH2>
             </DrawerContainer>
           }>
           <Drawer />
