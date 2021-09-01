@@ -60,31 +60,51 @@ const Listings = ({ viewer }: ListingsProps) => {
   }, [ulRef, isLoadingNext, hasNext, loadNext]);
 
   return (
-    <StyledUl ref={ulRef} data-testid='@test:listings:ul'>
-      {data.listings &&
-        data.listings.edges &&
-        data.listings.edges.map((edge, i) => {
-          if (edge && edge.node) {
-            setNodeLocalDefaultValues(edge.node.id);
-            return <Listing key={`${i}:${edge.node.id}`} listing={edge.node} />;
-          }
-          return null;
-        })}
-      {isLoadingNext && (
-        <li>
-          <StyledH2 data-testid='@test:listings:isLoadingNext'>
-            Loading...
-          </StyledH2>
-        </li>
-      )}
-    </StyledUl>
+    <>
+      <StyledUl ref={ulRef} data-testid='@test:listings:ul'>
+        {data.listings &&
+          data.listings.edges &&
+          data.listings.edges.map((edge, i) => {
+            if (edge && edge.node) {
+              setNodeLocalDefaultValues(edge.node.id);
+              return (
+                <Listing key={`${i}:${edge.node.id}`} listing={edge.node} />
+              );
+            }
+            return null;
+          })}
+        {isLoadingNext && (
+          <li>
+            <StyledH2 data-testid='@test:listings:isLoadingNext'>
+              Loading...
+            </StyledH2>
+          </li>
+        )}
+      </StyledUl>
+      <StyledButton>Dismiss All</StyledButton>
+    </>
   );
 };
 
 export default Listings;
 
+const StyledButton = styled.button`
+  ${({ theme }) => `
+    background-color:${theme.background};
+    color: ${theme.orange};
+  `}
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    background-color: #323232;
+  }
+`;
+
 const StyledUl = styled.ul`
-  padding: 0;
+  padding-left: 0;
   margin: 0;
   overflow-y: scroll;
   flex: 1;
