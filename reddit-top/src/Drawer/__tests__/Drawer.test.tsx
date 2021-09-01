@@ -9,7 +9,9 @@ import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
 import { MockDrawerViewer } from "../test.constants";
 
-describe("Nearby Filters", () => {
+const { listings: initialMockListings } = MockDrawerViewer();
+
+describe("Drawer Tests", () => {
   let screen: RenderResult;
 
   let environment: RelayMockEnvironment;
@@ -36,5 +38,12 @@ describe("Nearby Filters", () => {
 
   it("should render Drawer", () => {
     expect(screen).toMatchSnapshot();
+  });
+
+  it("should render Drawer initial lists and loadMore pagination", () => {
+    initialMockListings.edges.forEach((edge) => {
+      const li = screen.getByTestId(`@test:list:${edge.node.id}`);
+      expect(li).toBeTruthy();
+    });
   });
 });
