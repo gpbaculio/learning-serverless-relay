@@ -1,4 +1,11 @@
-import { cleanup, render, RenderResult, waitFor } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor,
+} from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 import {
   createMockEnvironment,
   MockPayloadGenerator,
@@ -7,9 +14,10 @@ import {
 
 import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
-import { MockDrawerViewer } from "../test.constants";
+import { MockDrawerNextViewer, MockDrawerViewer } from "../test.constants";
 
 const { listings: initialMockListings } = MockDrawerViewer();
+const { listings: nextMockListings } = MockDrawerNextViewer();
 
 describe("Drawer Tests", () => {
   let screen: RenderResult;
@@ -41,7 +49,30 @@ describe("Drawer Tests", () => {
   });
 
   it("should render Drawer initial lists and loadMore pagination", () => {
+    const ul = screen.getByTestId("@test:listings:ul");
+
+    expect(ul).toBeTruthy();
+
     initialMockListings.edges.forEach((edge) => {
+      const li = screen.getByTestId(`@test:list:${edge.node.id}`);
+      expect(li).toBeTruthy();
+    });
+
+    fireEvent.scroll(ul, { target: { scrollY: 800 } });
+
+    const paginationLoader = screen.getByTestId("@test:listings:isLoadingNext");
+
+    expect(paginationLoader).toBeTruthy();
+
+    act(() => {
+      environment.mock.resolveMostRecentOperation((operation) =>
+        MockPayloadGenerator.generate(operation, {
+          Viewer: MockDrawerNextViewer,
+        })
+      );
+    });
+
+    nextMockListings.edges.forEach((edge) => {
       const li = screen.getByTestId(`@test:list:${edge.node.id}`);
       expect(li).toBeTruthy();
     });

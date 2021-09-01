@@ -38,9 +38,6 @@ const Listings = ({ viewer }: ListingsProps) => {
 
     const onScroll = () => {
       if (ulRefValue) {
-        console.log(" ulRefValue.scrollHeight: ", ulRefValue.scrollHeight);
-        console.log(" ulRefValue.scrollTop: ", ulRefValue.scrollTop);
-        console.log(" ulRefValue.clientHeight: ", ulRefValue.clientHeight);
         const isBottom =
           ulRefValue.scrollHeight - ulRefValue.scrollTop ===
           ulRefValue.clientHeight;
@@ -63,7 +60,7 @@ const Listings = ({ viewer }: ListingsProps) => {
   }, [ulRef, isLoadingNext, hasNext, loadNext]);
 
   return (
-    <StyledUl ref={ulRef}>
+    <StyledUl ref={ulRef} data-testid='@test:listings:ul'>
       {data.listings &&
         data.listings.edges &&
         data.listings.edges.map((edge, i) => {

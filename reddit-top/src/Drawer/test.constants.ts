@@ -119,7 +119,7 @@ export const MockDrawerNextViewer = () => ({
     pageInfo: {
       startCursor: "YXJyYXljb25uZWN0aW9uOjc=",
       endCursor: "YXJyYXljb25uZWN0aW9uOjEz",
-      hasNextPage: true,
+      hasNextPage: false,
       hasPreviousPage: false,
     },
     edges: [
