@@ -1,36 +1,43 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { graphql, useFragment, useRelayEnvironment } from "react-relay";
+import { graphql, useFragment } from "react-relay";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { BsCircleFill, BsChevronRight, BsXCircle } from "react-icons/bs";
 
 import { ListingFragmentGraphQL_listing$key } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
-import { ListKToUpdate, listUpdater, timeAgo } from "./helpers";
+import { ListKToUpdate, timeAgo } from "./helpers";
 
 interface ListProps {
   listing: ListingFragmentGraphQL_listing$key;
+  updateNode: (
+    id: string,
+    value: boolean,
+    k: ListKToUpdate | ListKToUpdate[]
+  ) => void;
 }
 
 const dismissConfig = {
   duration: 50,
 };
 
-const Listing = ({ listing }: ListProps) => {
-  const environment = useRelayEnvironment();
+const Listing = ({ listing, updateNode }: ListProps) => {
   const node = useFragment(ListingFragmentGraphQL, listing);
 
   const liRef = useRef<HTMLLIElement>(null);
   const [hasEnteredDismiss, setHasEnteredDismiss] = useState(false);
   const [height, setHeight] = useState(0);
   const [isImageLoaded, setisImageLoaded] = useState(false);
+  const [isImageLoadedError, setisImageLoadedError] = useState(false);
 
   useEffect(() => {
     if (liRef && liRef.current && isImageLoaded) {
       const { offsetHeight } = liRef.current;
       setHeight(offsetHeight);
+    } else if (liRef && liRef.current && isImageLoadedError) {
+      setHeight(189);
     }
-  }, [liRef, isImageLoaded]);
+  }, [liRef, isImageLoaded, isImageLoadedError]);
 
   const liStyle = useSpring({
     ...(height !== 0 && { height: `${node.isDismissed ? 0 : height}px` }),
@@ -46,24 +53,19 @@ const Listing = ({ listing }: ListProps) => {
     },
   });
 
-  const updateNode = useCallback(
-    (value: boolean, k: ListKToUpdate | ListKToUpdate[]) => {
-      listUpdater(environment, value, k, node.id);
-    },
-    [environment, node.id]
-  );
-
   const onDismiss = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       event.stopPropagation();
-      updateNode(true, "isDismissed");
+      if (node && node.isDismissed !== undefined && node.id) {
+        updateNode(node.id, true, "isDismissed");
+      }
     },
-    [updateNode]
+    [updateNode, node]
   );
 
   const onRead = useCallback(() => {
-    updateNode(true, "isRead");
-  }, [updateNode]);
+    updateNode(node.id, true, "isRead");
+  }, [updateNode, node.id]);
 
   const dismissSpanStyle = useSpring({
     fontWeight: hasEnteredDismiss ? 600 : 400,
@@ -88,6 +90,10 @@ const Listing = ({ listing }: ListProps) => {
     setisImageLoaded(true);
   };
 
+  const onListingImageLoadError = () => {
+    setisImageLoadedError(true);
+  };
+
   return (
     <StyledAnimatedLi
       data-testid={`@test:list:${node.id}`}
@@ -108,6 +114,7 @@ const Listing = ({ listing }: ListProps) => {
         <ListingImage
           src={node.thumbnail as string}
           onLoad={onListingImageLoad}
+          onError={onListingImageLoadError}
         />
         <Title>{node.title}</Title>
         <ChevronRight size={18} />
