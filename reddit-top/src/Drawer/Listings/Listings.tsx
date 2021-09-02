@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from "react";
 import {
   usePaginationFragment,
   graphql,
@@ -9,10 +10,9 @@ import Listing from "./Listing";
 
 import { ListingsPaginationQuery } from "../../__generated__/ListingsPaginationQuery.graphql";
 import { ListingsPagination_viewer$key } from "../../__generated__/ListingsPagination_viewer.graphql";
-import { useCallback, useEffect } from "react";
-import { listUpdater } from "./helpers";
-import { useRef } from "react";
+import { ListKToUpdate, listUpdater } from "./helpers";
 import { StyledH2 } from "../../components/StyledElements";
+import { ListingFragmentGraphQL_listing$data } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
 interface ListingsProps {
   viewer: ListingsPagination_viewer$key;
@@ -26,9 +26,9 @@ const Listings = ({ viewer }: ListingsProps) => {
     ListingsPagination_viewer$key
   >(ListingsGraphQL, viewer);
 
-  const setNodeLocalDefaultValues = useCallback(
-    (id: string) => {
-      listUpdater(environment, false, ["isDismissed", "isRead"], id);
+  const updateNode = useCallback(
+    (id: string, value: boolean, k: ListKToUpdate | ListKToUpdate[]) => {
+      listUpdater(environment, value, k, id);
     },
     [environment]
   );
@@ -59,6 +59,34 @@ const Listings = ({ viewer }: ListingsProps) => {
     };
   }, [ulRef, isLoadingNext, hasNext, loadNext]);
 
+  const onDismissAll = useCallback(() => {
+    if (data && data.listings && data.listings.edges) {
+      const getNode = (id: string) =>
+        environment
+          .getStore()
+          .getSource()
+          .get<ListingFragmentGraphQL_listing$data>(id);
+
+      const nodes =
+        data &&
+        data.listings &&
+        data.listings.edges
+          .filter((edge) => edge && edge.node && edge.node.id)
+          .map((edge) => getNode(edge!.node!.id));
+
+      if (nodes && nodes.length) {
+        const isNotDismissedIds = nodes
+          .filter((node) => !node!.isDismissed)
+          .map((n) => n && n.id);
+        if (isNotDismissedIds.length) {
+          isNotDismissedIds.forEach((id) => {
+            updateNode(`${id}`, true, "isDismissed");
+          });
+        }
+      }
+    }
+  }, [data, environment, updateNode]);
+
   return (
     <>
       <StyledUl ref={ulRef} data-testid='@test:listings:ul'>
@@ -66,9 +94,13 @@ const Listings = ({ viewer }: ListingsProps) => {
           data.listings.edges &&
           data.listings.edges.map((edge, i) => {
             if (edge && edge.node) {
-              setNodeLocalDefaultValues(edge.node.id);
+              updateNode(edge.node.id, false, ["isDismissed", "isRead"]);
               return (
-                <Listing key={`${i}:${edge.node.id}`} listing={edge.node} />
+                <Listing
+                  key={`${i}:${edge.node.id}`}
+                  listing={edge.node}
+                  updateNode={updateNode}
+                />
               );
             }
             return null;
@@ -81,7 +113,11 @@ const Listings = ({ viewer }: ListingsProps) => {
           </li>
         )}
       </StyledUl>
-      <StyledButton>Dismiss All</StyledButton>
+      <StyledButton
+        data-testid='@test:listings:dismissAllBtn'
+        onClick={onDismissAll}>
+        Dismiss All
+      </StyledButton>
     </>
   );
 };
