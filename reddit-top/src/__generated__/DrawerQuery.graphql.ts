@@ -5,9 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 
 import { FragmentRefs } from "relay-runtime";
-export type DrawerQueryVariables = {
-    id?: string | null;
-};
+export type DrawerQueryVariables = {};
 export type DrawerQueryResponse = {
     readonly viewer: {
         readonly user: string;
@@ -23,13 +21,11 @@ export type DrawerQuery = {
 
 
 /*
-query DrawerQuery(
-  $id: String
-) {
+query DrawerQuery {
   viewer {
     user
     id
-    ...ListingsPagination_viewer_1Bmzm5
+    ...ListingsPagination_viewer
   }
 }
 
@@ -43,8 +39,8 @@ fragment ListingFragmentGraphQL_listing on List {
   name
 }
 
-fragment ListingsPagination_viewer_1Bmzm5 on Viewer {
-  listings(first: 7, id: $id) {
+fragment ListingsPagination_viewer on Viewer {
+  listings(first: 7) {
     pageInfo {
       startCursor
       endCursor
@@ -64,43 +60,30 @@ fragment ListingsPagination_viewer_1Bmzm5 on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = {
+var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "user",
   "storageKey": null
 },
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
-  "kind": "Variable",
-  "name": "id",
-  "variableName": "id"
-},
-v4 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 7
-  },
-  (v3/*: any*/)
+  }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "DrawerQuery",
@@ -113,12 +96,10 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v0/*: any*/),
           (v1/*: any*/),
-          (v2/*: any*/),
           {
-            "args": [
-              (v3/*: any*/)
-            ],
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ListingsPagination_viewer"
           }
@@ -131,7 +112,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "DrawerQuery",
     "selections": [
@@ -143,11 +124,11 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v0/*: any*/),
           (v1/*: any*/),
-          (v2/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "ListingConnection",
             "kind": "LinkedField",
             "name": "listings",
@@ -215,7 +196,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -291,14 +272,12 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "listings(first:7)"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
-            "filters": [
-              "id"
-            ],
+            "args": (v2/*: any*/),
+            "filters": null,
             "handle": "connection",
             "key": "ListingsPagination_viewer_listings",
             "kind": "LinkedHandle",
@@ -310,14 +289,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "23e2e21b7bffce2028f6b7d373d08b77",
+    "cacheID": "474791d6861ca876a70d0cfb19e4bb99",
     "id": null,
     "metadata": {},
     "name": "DrawerQuery",
     "operationKind": "query",
-    "text": "query DrawerQuery(\n  $id: String\n) {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer_1Bmzm5\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_1Bmzm5 on Viewer {\n  listings(first: 7, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query DrawerQuery {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer on Viewer {\n  listings(first: 7) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2c30d2fd89fe84e207a8b06bdac063eb';
+(node as any).hash = 'ca55ed7c17b3cf426a29597b71bae579';
 export default node;

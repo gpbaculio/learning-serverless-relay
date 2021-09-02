@@ -46,11 +46,6 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "cursor"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "id"
     }
   ],
   "kind": "Fragment",
@@ -82,13 +77,7 @@ return {
   "selections": [
     {
       "alias": "listings",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "id",
-          "variableName": "id"
-        }
-      ],
+      "args": null,
       "concreteType": "ListingConnection",
       "kind": "LinkedField",
       "name": "__ListingsPagination_viewer_listings_connection",
@@ -189,5 +178,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2872500cd646d1ef0ed8326106ab133e';
+(node as any).hash = 'c8c04a3ea9802d1b4d8798bb119f86a7';
 export default node;
