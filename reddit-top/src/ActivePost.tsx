@@ -33,8 +33,6 @@ const ActivePost = ({ isDrawerHidden }: ActivePostProps) => {
     marginLeft: `${isDrawerHidden ? 58 : drawerWidth}px`,
   });
 
-  console.log("ActivePost viewer: ", viewer);
-
   return <Container style={style}>ActivePost</Container>;
 };
 
