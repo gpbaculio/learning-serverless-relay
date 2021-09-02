@@ -44,7 +44,12 @@ export const listUpdater = (
         list.setValue(value, k);
       } else {
         k.forEach((j) => {
-          list.setValue(value, j);
+          if (
+            typeof list.getValue("isDismissed") === "undefined" &&
+            typeof list.getValue("isRead") === "undefined"
+          ) {
+            list.setValue(value, j);
+          }
         });
       }
     }
