@@ -1,7 +1,9 @@
+import { useCallback, useEffect, useRef } from "react";
 import {
   usePaginationFragment,
   graphql,
   useRelayEnvironment,
+  commitLocalUpdate,
 } from "react-relay";
 import styled from "styled-components";
 
@@ -9,10 +11,9 @@ import Listing from "./Listing";
 
 import { ListingsPaginationQuery } from "../../__generated__/ListingsPaginationQuery.graphql";
 import { ListingsPagination_viewer$key } from "../../__generated__/ListingsPagination_viewer.graphql";
-import { useCallback, useEffect } from "react";
-import { listUpdater } from "./helpers";
-import { useRef } from "react";
+import { ListKToUpdate } from "./helpers";
 import { StyledH2 } from "../../components/StyledElements";
+import { ListingFragmentGraphQL_listing$data } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
 interface ListingsProps {
   viewer: ListingsPagination_viewer$key;
@@ -26,9 +27,25 @@ const Listings = ({ viewer }: ListingsProps) => {
     ListingsPagination_viewer$key
   >(ListingsGraphQL, viewer);
 
-  const setNodeLocalDefaultValues = useCallback(
-    (id: string) => {
-      listUpdater(environment, false, ["isDismissed", "isRead"], id);
+  const updateListNode = useCallback(
+    (id: string, value: boolean, k: ListKToUpdate | ListKToUpdate[]) => {
+      commitLocalUpdate(environment, (store) => {
+        const list = store.get<ListingFragmentGraphQL_listing$data>(id);
+        if (list) {
+          if (typeof k === "string") {
+            list.setValue(value, k);
+          } else {
+            k.forEach((j) => {
+              if (
+                typeof list.getValue("isDismissed") === "undefined" &&
+                typeof list.getValue("isRead") === "undefined"
+              ) {
+                list.setValue(value, j);
+              }
+            });
+          }
+        }
+      });
     },
     [environment]
   );
@@ -59,6 +76,34 @@ const Listings = ({ viewer }: ListingsProps) => {
     };
   }, [ulRef, isLoadingNext, hasNext, loadNext]);
 
+  const onDismissAll = useCallback(() => {
+    if (data && data.listings && data.listings.edges) {
+      const getNode = (id: string) =>
+        environment
+          .getStore()
+          .getSource()
+          .get<ListingFragmentGraphQL_listing$data>(id);
+
+      const nodes =
+        data &&
+        data.listings &&
+        data.listings.edges
+          .filter((edge) => edge && edge.node && edge.node.id)
+          .map((edge) => getNode(edge!.node!.id));
+
+      if (nodes && nodes.length) {
+        const isNotDismissedIds = nodes
+          .filter((node) => !node!.isDismissed)
+          .map((n) => n && n.id);
+        if (isNotDismissedIds.length) {
+          isNotDismissedIds.forEach((id) => {
+            updateListNode(`${id}`, true, "isDismissed");
+          });
+        }
+      }
+    }
+  }, [data, environment, updateListNode]);
+
   return (
     <>
       <StyledUl ref={ulRef} data-testid='@test:listings:ul'>
@@ -66,7 +111,7 @@ const Listings = ({ viewer }: ListingsProps) => {
           data.listings.edges &&
           data.listings.edges.map((edge, i) => {
             if (edge && edge.node) {
-              setNodeLocalDefaultValues(edge.node.id);
+              updateListNode(edge.node.id, false, ["isDismissed", "isRead"]);
               return (
                 <Listing key={`${i}:${edge.node.id}`} listing={edge.node} />
               );
@@ -81,7 +126,11 @@ const Listings = ({ viewer }: ListingsProps) => {
           </li>
         )}
       </StyledUl>
-      <StyledButton>Dismiss All</StyledButton>
+      <StyledButton
+        data-testid='@test:listings:dismissAllBtn'
+        onClick={onDismissAll}>
+        Dismiss All
+      </StyledButton>
     </>
   );
 };
@@ -113,12 +162,11 @@ const StyledUl = styled.ul`
 const ListingsGraphQL = graphql`
   fragment ListingsPagination_viewer on Viewer
   @argumentDefinitions(
-    id: { type: "String", defaultValue: null }
     count: { type: "Int", defaultValue: 7 }
     cursor: { type: "String", defaultValue: null }
   )
   @refetchable(queryName: "ListingsPaginationQuery") {
-    listings(first: $count, after: $cursor, id: $id)
+    listings(first: $count, after: $cursor)
       @connection(key: "ListingsPagination_viewer_listings") {
       pageInfo {
         startCursor

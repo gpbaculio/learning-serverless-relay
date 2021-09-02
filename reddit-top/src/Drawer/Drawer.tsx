@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useLazyLoadQuery, graphql } from "react-relay";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
@@ -8,32 +8,26 @@ import Header from "./Header";
 import Listings from "./Listings";
 
 import { DrawerQuery } from "../__generated__/DrawerQuery.graphql";
+import { drawerWidth } from "../App";
 
-const Drawer = () => {
+interface DrawerProps {
+  isDrawerHidden?: boolean;
+  hideDrawer?: () => void;
+  showDrawer?: () => void;
+}
+
+const Drawer = ({ isDrawerHidden, hideDrawer, showDrawer }: DrawerProps) => {
   const { viewer } = useLazyLoadQuery<DrawerQuery>(DrawerGraphQL, {});
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const [hideDrawer, setHideDrawer] = useState(false);
 
   const handlers = useSwipeable({
-    onSwipedRight: () => {
-      setHideDrawer(false);
-    },
-    onSwipedLeft: () => {
-      setHideDrawer(true);
-    },
+    onSwipedRight: showDrawer,
+    onSwipedLeft: hideDrawer,
     trackMouse: true,
   });
 
-  useEffect(() => {
-    if (containerRef && containerRef.current) {
-      const { width } = containerRef.current.getBoundingClientRect();
-      setContainerWidth(width);
-    }
-  }, [containerRef]);
-
   const styles = useSpring({
-    transform: `translateX(${hideDrawer ? -containerWidth / 1.2 : 0}px)`,
+    transform: `translateX(${!!isDrawerHidden ? -drawerWidth / 1.2 : 0}px)`,
   });
 
   return (
@@ -47,11 +41,11 @@ const Drawer = () => {
 export default Drawer;
 
 const DrawerGraphQL = graphql`
-  query DrawerQuery($id: String) {
+  query DrawerQuery {
     viewer {
       user
       id
-      ...ListingsPagination_viewer @arguments(id: $id)
+      ...ListingsPagination_viewer
     }
   }
 `;
@@ -61,5 +55,6 @@ export const DrawerContainer = styled(animated.div)`
   height: 100%;
   display: flex;
   flex-direction: column;
-  min-width: 300px;
+  min-width: 352px;
+  position: absolute;
 `;

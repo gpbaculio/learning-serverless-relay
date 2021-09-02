@@ -2,3 +2,13 @@ extend type List {
   isDismissed: Boolean
   isRead: Boolean
 }
+
+type ActivePost {
+  thumbnail: String
+  title: String
+  author: String
+}
+
+extend type Viewer {
+  activePost: ActivePost
+}

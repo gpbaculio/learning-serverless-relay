@@ -8,7 +8,6 @@ import { FragmentRefs } from "relay-runtime";
 export type ListingsPaginationQueryVariables = {
     count?: number | null;
     cursor?: string | null;
-    id?: string | null;
 };
 export type ListingsPaginationQueryResponse = {
     readonly viewer: {
@@ -26,10 +25,9 @@ export type ListingsPaginationQuery = {
 query ListingsPaginationQuery(
   $count: Int = 7
   $cursor: String
-  $id: String
 ) {
   viewer {
-    ...ListingsPagination_viewer_3T5kGn
+    ...ListingsPagination_viewer_1G22uz
     id
   }
 }
@@ -44,8 +42,8 @@ fragment ListingFragmentGraphQL_listing on List {
   name
 }
 
-fragment ListingsPagination_viewer_3T5kGn on Viewer {
-  listings(first: $count, after: $cursor, id: $id) {
+fragment ListingsPagination_viewer_1G22uz on Viewer {
+  listings(first: $count, after: $cursor) {
     pageInfo {
       startCursor
       endCursor
@@ -75,19 +73,9 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "cursor"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
   }
 ],
-v1 = {
-  "kind": "Variable",
-  "name": "id",
-  "variableName": "id"
-},
-v2 = [
+v1 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -97,10 +85,9 @@ v2 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "count"
-  },
-  (v1/*: any*/)
+  }
 ],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -133,8 +120,7 @@ return {
                 "kind": "Variable",
                 "name": "cursor",
                 "variableName": "cursor"
-              },
-              (v1/*: any*/)
+              }
             ],
             "kind": "FragmentSpread",
             "name": "ListingsPagination_viewer"
@@ -162,7 +148,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "ListingConnection",
             "kind": "LinkedField",
             "name": "listings",
@@ -230,7 +216,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -310,30 +296,28 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
-            "filters": [
-              "id"
-            ],
+            "args": (v1/*: any*/),
+            "filters": null,
             "handle": "connection",
             "key": "ListingsPagination_viewer_listings",
             "kind": "LinkedHandle",
             "name": "listings"
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a9b6f47bb808c3db5da6c8f122cba1ae",
+    "cacheID": "43d7478d53f7541784335c4f91543f30",
     "id": null,
     "metadata": {},
     "name": "ListingsPaginationQuery",
     "operationKind": "query",
-    "text": "query ListingsPaginationQuery(\n  $count: Int = 7\n  $cursor: String\n  $id: String\n) {\n  viewer {\n    ...ListingsPagination_viewer_3T5kGn\n    id\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_3T5kGn on Viewer {\n  listings(first: $count, after: $cursor, id: $id) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query ListingsPaginationQuery(\n  $count: Int = 7\n  $cursor: String\n) {\n  viewer {\n    ...ListingsPagination_viewer_1G22uz\n    id\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_1G22uz on Viewer {\n  listings(first: $count, after: $cursor) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2872500cd646d1ef0ed8326106ab133e';
+(node as any).hash = 'c8c04a3ea9802d1b4d8798bb119f86a7';
 export default node;
