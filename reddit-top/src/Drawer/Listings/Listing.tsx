@@ -1,27 +1,31 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { graphql, useFragment } from "react-relay";
+import {
+  commitLocalUpdate,
+  graphql,
+  useFragment,
+  useRelayEnvironment,
+} from "react-relay";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { BsCircleFill, BsChevronRight, BsXCircle } from "react-icons/bs";
 
-import { ListingFragmentGraphQL_listing$key } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
+import {
+  ListingFragmentGraphQL_listing$data,
+  ListingFragmentGraphQL_listing$key,
+} from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
 import { ListKToUpdate, timeAgo } from "./helpers";
 
 interface ListProps {
   listing: ListingFragmentGraphQL_listing$key;
-  updateNode: (
-    id: string,
-    value: boolean,
-    k: ListKToUpdate | ListKToUpdate[]
-  ) => void;
 }
 
 const dismissConfig = {
   duration: 50,
 };
 
-const Listing = ({ listing, updateNode }: ListProps) => {
+const Listing = ({ listing }: ListProps) => {
+  const environment = useRelayEnvironment();
   const node = useFragment(ListingFragmentGraphQL, listing);
 
   const liRef = useRef<HTMLLIElement>(null);
@@ -53,19 +57,43 @@ const Listing = ({ listing, updateNode }: ListProps) => {
     },
   });
 
+  const sharedUpdater = useCallback(
+    (value: boolean, listK: ListKToUpdate, isPost: boolean) => {
+      commitLocalUpdate(environment, (store) => {
+        if (isPost) {
+          const viewerProxy = store.getRoot().getLinkedRecord("viewer");
+          if (viewerProxy) {
+            const postProxy = viewerProxy.getLinkedRecord("activePost");
+            if (postProxy) {
+              postProxy.setValue(node.thumbnail, "thumbnail");
+              postProxy.setValue(node.author, "author");
+              postProxy.setValue(node.title, "title");
+            }
+          }
+        }
+        const listProxy = store.get<ListingFragmentGraphQL_listing$data>(
+          node.id
+        );
+
+        if (listProxy && !listProxy.getValue(listK)) {
+          listProxy.setValue(value, listK);
+        }
+      });
+    },
+    [environment, node]
+  );
+
   const onDismiss = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       event.stopPropagation();
-      if (node && node.isDismissed !== undefined && node.id) {
-        updateNode(node.id, true, "isDismissed");
-      }
+      sharedUpdater(true, "isDismissed", false);
     },
-    [updateNode, node]
+    [sharedUpdater]
   );
 
   const onRead = useCallback(() => {
-    updateNode(node.id, true, "isRead");
-  }, [updateNode, node.id]);
+    sharedUpdater(true, "isRead", true);
+  }, [sharedUpdater]);
 
   const dismissSpanStyle = useSpring({
     fontWeight: hasEnteredDismiss ? 600 : 400,
@@ -176,7 +204,7 @@ const BottomSection = styled.div`
 
 const Title = styled.p`
   ${({ theme }) => `color:${theme.white};`}
-  width: 250px;
+  width: 200px;
   margin-right: 24px;
 `;
 
