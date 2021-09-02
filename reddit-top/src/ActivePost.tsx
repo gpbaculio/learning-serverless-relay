@@ -3,14 +3,15 @@ import { useLazyLoadQuery, useRelayEnvironment } from "react-relay";
 import { animated, useSpring } from "react-spring";
 import { commitLocalUpdate, graphql } from "relay-runtime";
 import styled from "styled-components";
+
+import { drawerWidth } from "./App";
 import { ActivePostQuery } from "./__generated__/ActivePostQuery.graphql";
 
 interface ActivePostProps {
   isDrawerHidden: boolean;
-  drawerWidth: number;
 }
 
-const ActivePost = ({ isDrawerHidden, drawerWidth }: ActivePostProps) => {
+const ActivePost = ({ isDrawerHidden }: ActivePostProps) => {
   const { viewer } = useLazyLoadQuery<ActivePostQuery>(ActivePostGraphQL, {});
   const environment = useRelayEnvironment();
 
