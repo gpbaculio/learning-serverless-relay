@@ -11,6 +11,7 @@ import {
   MockPayloadGenerator,
   RelayMockEnvironment,
 } from "relay-test-utils";
+import { Globals } from "react-spring";
 
 import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
@@ -30,8 +31,17 @@ describe("Drawer Tests", () => {
   let screen: RenderResult;
 
   let environment: RelayMockEnvironment;
-
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
   beforeEach(() => {
+    Globals.assign({
+      skipAnimation: true,
+      requestAnimationFrame: (fn) => setTimeout(fn, 16),
+    });
     environment = createMockEnvironment();
 
     environment.mock.queueOperationResolver((operation) =>
@@ -98,7 +108,15 @@ describe("Drawer Tests", () => {
       const listUnreadCircle = screen.getByTestId(unReadCircleTestId);
       expect(listUnreadCircle).toBeTruthy();
 
+      const list = getNode(environment, edge.node.id);
+      expect(list).toBeTruthy();
+      expect(list && list.isRead).toBeFalsy();
+
       fireEvent.click(li);
+
+      const listOnDismissClick = getNode(environment, edge.node.id);
+      expect(listOnDismissClick).toBeTruthy();
+      expect(listOnDismissClick && listOnDismissClick.isRead).toBeTruthy();
 
       expect(screen.queryByTestId(unReadCircleTestId)).toBeFalsy();
     });
@@ -122,8 +140,20 @@ describe("Drawer Tests", () => {
       expect(list && list.isDismissed).toBeFalsy();
 
       expect(dismissBtn).toBeTruthy();
+
       fireEvent.click(dismissBtn);
 
+      jest.advanceTimersByTime(500);
+
+      expect(li).toHaveStyle({
+        opacity: 0,
+        "font-size": "0px",
+        transform: `translateX(-100px)`,
+        "padding-top": "0px",
+        "padding-right": "0px",
+        "padding-bottom": "0px",
+        "padding-left": "0px",
+      });
       const listOnDismissClick = getNode(environment, edge.node.id);
       expect(listOnDismissClick).toBeTruthy();
       expect(listOnDismissClick && listOnDismissClick.isDismissed).toBeTruthy();
