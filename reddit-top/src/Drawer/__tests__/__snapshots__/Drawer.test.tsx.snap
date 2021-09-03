@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="sc-hBEYId bYwsCh"
+        class="sc-fFucqa cCIxKO"
         style="transform: translateX(0px);"
       >
         <h2
@@ -51,7 +51,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                18 hours ago
+                2 days ago
               </span>
             </div>
             <div
@@ -62,7 +62,7 @@ Object {
                 src="https://b.thumbs.redditmedia.com/Y1309G6Yv077MAGn8mvvCD7_Iq62YhyxjGAVwgRVofA.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 He's been trying to get a PS5 for months - I just happened to find one my local Curry's. He's gonna freak when he wakes up
               </p>
@@ -165,7 +165,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                18 hours ago
+                2 days ago
               </span>
             </div>
             <div
@@ -176,7 +176,7 @@ Object {
                 src="https://a.thumbs.redditmedia.com/szXFQxAARqHwL5wpd9mI0drMa3iKQp4vIi-Nsh3RZn0.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 Man gets electrocuted while holding child. Red shirt guy saves the day
               </p>
@@ -279,7 +279,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                21 hours ago
+                2 days ago
               </span>
             </div>
             <div
@@ -290,7 +290,7 @@ Object {
                 src="https://b.thumbs.redditmedia.com/Zf_KS0Wy1T0pE_3d4rBTYbGTEeJ_E0hrIMjdeORanLA.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 Thick, beautiful and gorgeous hair...
               </p>
@@ -393,7 +393,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                18 hours ago
+                2 days ago
               </span>
             </div>
             <div
@@ -404,7 +404,7 @@ Object {
                 src="https://b.thumbs.redditmedia.com/VTowzL2sD06AcDFptGeJFQgW1ecL7IGnE3stfQOomUA.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 Mens fantasies
               </p>
@@ -507,7 +507,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                21 hours ago
+                2 days ago
               </span>
             </div>
             <div
@@ -518,7 +518,7 @@ Object {
                 src="https://b.thumbs.redditmedia.com/gBAsQ121fsuqS3lL953fQSUiiVp7FlBc0u9xeIGt4IA.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 BBC reporter randomly asking if they remember the 1976 FA Cup match, ends up asking the Liverpool goalkeeper who played in it (wholesome)
               </p>
@@ -621,7 +621,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                yesterday
+                3 days ago
               </span>
             </div>
             <div
@@ -632,7 +632,7 @@ Object {
                 src="https://b.thumbs.redditmedia.com/PatEMtGE9kRS0HkKPjtDO3tI-kOAK98oFffTASoUhQg.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 This guy lmao
               </p>
@@ -735,7 +735,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                16 hours ago
+                2 days ago
               </span>
             </div>
             <div
@@ -746,7 +746,7 @@ Object {
                 src="https://b.thumbs.redditmedia.com/K9xWLgUpG65NWonykZClWBRQAfeHQR1xEMFXNKtbWOI.jpg"
               />
               <p
-                class="sc-iBPTik cJbELV"
+                class="sc-iBPTik dRhPnc"
               >
                 Guy saves woman (and her baby) from committing suicide
               </p>
@@ -819,6 +819,7 @@ Object {
         </ul>
         <button
           class="sc-bqyKOL hbMfpI"
+          data-testid="@test:listings:dismissAllBtn"
         >
           Dismiss All
         </button>
@@ -827,7 +828,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="sc-hBEYId bYwsCh"
+      class="sc-fFucqa cCIxKO"
       style="transform: translateX(0px);"
     >
       <h2
@@ -872,7 +873,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              18 hours ago
+              2 days ago
             </span>
           </div>
           <div
@@ -883,7 +884,7 @@ Object {
               src="https://b.thumbs.redditmedia.com/Y1309G6Yv077MAGn8mvvCD7_Iq62YhyxjGAVwgRVofA.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               He's been trying to get a PS5 for months - I just happened to find one my local Curry's. He's gonna freak when he wakes up
             </p>
@@ -986,7 +987,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              18 hours ago
+              2 days ago
             </span>
           </div>
           <div
@@ -997,7 +998,7 @@ Object {
               src="https://a.thumbs.redditmedia.com/szXFQxAARqHwL5wpd9mI0drMa3iKQp4vIi-Nsh3RZn0.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               Man gets electrocuted while holding child. Red shirt guy saves the day
             </p>
@@ -1100,7 +1101,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              21 hours ago
+              2 days ago
             </span>
           </div>
           <div
@@ -1111,7 +1112,7 @@ Object {
               src="https://b.thumbs.redditmedia.com/Zf_KS0Wy1T0pE_3d4rBTYbGTEeJ_E0hrIMjdeORanLA.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               Thick, beautiful and gorgeous hair...
             </p>
@@ -1214,7 +1215,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              18 hours ago
+              2 days ago
             </span>
           </div>
           <div
@@ -1225,7 +1226,7 @@ Object {
               src="https://b.thumbs.redditmedia.com/VTowzL2sD06AcDFptGeJFQgW1ecL7IGnE3stfQOomUA.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               Mens fantasies
             </p>
@@ -1328,7 +1329,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              21 hours ago
+              2 days ago
             </span>
           </div>
           <div
@@ -1339,7 +1340,7 @@ Object {
               src="https://b.thumbs.redditmedia.com/gBAsQ121fsuqS3lL953fQSUiiVp7FlBc0u9xeIGt4IA.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               BBC reporter randomly asking if they remember the 1976 FA Cup match, ends up asking the Liverpool goalkeeper who played in it (wholesome)
             </p>
@@ -1442,7 +1443,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              yesterday
+              3 days ago
             </span>
           </div>
           <div
@@ -1453,7 +1454,7 @@ Object {
               src="https://b.thumbs.redditmedia.com/PatEMtGE9kRS0HkKPjtDO3tI-kOAK98oFffTASoUhQg.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               This guy lmao
             </p>
@@ -1556,7 +1557,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              16 hours ago
+              2 days ago
             </span>
           </div>
           <div
@@ -1567,7 +1568,7 @@ Object {
               src="https://b.thumbs.redditmedia.com/K9xWLgUpG65NWonykZClWBRQAfeHQR1xEMFXNKtbWOI.jpg"
             />
             <p
-              class="sc-iBPTik cJbELV"
+              class="sc-iBPTik dRhPnc"
             >
               Guy saves woman (and her baby) from committing suicide
             </p>
@@ -1640,6 +1641,7 @@ Object {
       </ul>
       <button
         class="sc-bqyKOL hbMfpI"
+        data-testid="@test:listings:dismissAllBtn"
       >
         Dismiss All
       </button>
