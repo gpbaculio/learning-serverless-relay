@@ -122,7 +122,7 @@ describe("Drawer Tests", () => {
     });
   });
 
-  it("should render Drawer lists and handle dismiss when Dismiss Post btn is pressed", async () => {
+  it("should render Drawer lists and handle dismiss when Dismiss Post btn is pressed", () => {
     const ul = screen.getByTestId("@test:listings:ul");
 
     expect(ul).toBeTruthy();
@@ -160,7 +160,7 @@ describe("Drawer Tests", () => {
     });
   });
 
-  it("should render Drawer lists and handle dismissing all lists when Dismiss All btn is pressed", async () => {
+  it("should render Drawer lists and handle dismissing all lists when Dismiss All btn is pressed", () => {
     const ul = screen.getByTestId("@test:listings:ul");
 
     expect(ul).toBeTruthy();
