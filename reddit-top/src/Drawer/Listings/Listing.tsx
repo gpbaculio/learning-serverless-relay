@@ -61,6 +61,7 @@ const Listing = ({ listing }: ListProps) => {
     ...(height !== 0 && { height: `${node.isDismissed ? 0 : height}px` }),
     opacity: node.isDismissed ? 0 : 1,
     fontSize: `${node.isDismissed ? 0 : 18}px`,
+    width: `${node.isDismissed ? "0" : "100%"}`,
     transform: `translateX(${node.isDismissed ? -100 : 0}px)`,
     paddingTop: `${node.isDismissed ? 0 : 12}px`,
     paddingBottom: `${node.isDismissed ? 0 : 12}px`,
