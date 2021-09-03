@@ -1,10 +1,10 @@
 import { useRef, useEffect } from "react";
 import {
   useLazyLoadQuery,
-  graphql,
   useRelayEnvironment,
   commitLocalUpdate,
 } from "react-relay";
+import graphql from "babel-plugin-relay/macro";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import { useSwipeable } from "react-swipeable";
@@ -23,6 +23,15 @@ interface DrawerProps {
 
 const Drawer = ({ isDrawerHidden, hideDrawer, showDrawer }: DrawerProps) => {
   const environment = useRelayEnvironment();
+  const DrawerGraphQL = graphql`
+    query DrawerQuery {
+      viewer {
+        user
+        id
+        ...ListingsPagination_viewer
+      }
+    }
+  `;
   const { viewer } = useLazyLoadQuery<DrawerQuery>(DrawerGraphQL, {});
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -59,16 +68,6 @@ const Drawer = ({ isDrawerHidden, hideDrawer, showDrawer }: DrawerProps) => {
 };
 
 export default Drawer;
-
-const DrawerGraphQL = graphql`
-  query DrawerQuery {
-    viewer {
-      user
-      id
-      ...ListingsPagination_viewer
-    }
-  }
-`;
 
 export const DrawerContainer = styled(animated.div)`
   ${({ theme }) => `background-color:${theme.background};`}
