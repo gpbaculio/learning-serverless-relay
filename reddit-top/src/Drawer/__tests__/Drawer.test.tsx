@@ -16,7 +16,6 @@ import { Globals } from "react-spring";
 import { RelayProvider } from "../../components";
 import Drawer from "../Drawer";
 import { MockDrawerNextViewer, MockDrawerViewer } from "../test.constants";
-import { ListingFragmentGraphQL_listing$data } from "../../__generated__/ListingFragmentGraphQL_listing.graphql";
 
 const { listings: initialMockListings, id: mockViewerId } = MockDrawerViewer();
 const { listings: nextMockListings } = MockDrawerNextViewer();
