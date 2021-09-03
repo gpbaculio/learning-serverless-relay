@@ -32,7 +32,11 @@ const ActivePost = ({ isDrawerHidden }: ActivePostProps) => {
   return (
     <Container style={style}>
       {viewer && viewer.activePost && (
-        <Author>{viewer.activePost.author}</Author>
+        <>
+          <Author>{viewer.activePost.author}</Author>
+          <Thumbnail src={viewer.activePost.thumbnail as string} />
+          <Title>{viewer.activePost.title}</Title>
+        </>
       )}
     </Container>
   );
@@ -43,12 +47,27 @@ export default ActivePost;
 const Author = styled.h1`
   font-size: 24px;
   font-weight: 600;
-  color: red;
-  margin-left: 20px;
+  align-self: flex-start;
+`;
+
+const Thumbnail = styled.img`
+  object-fit: cover;
+  width: 200px;
+  height: auto;
+`;
+
+const Title = styled.h2`
+  font-size: 16px;
+  font-weight: 600;
+  align-self: flex-start;
 `;
 
 const Container = styled(animated.div)`
   display: flex;
   width: 100%;
   flex: 1;
+  padding-left: 16px;
+  padding-right: 16px;
+  flex-direction: column;
+  align-items: center;
 `;
