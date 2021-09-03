@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   commitLocalUpdate,
-  graphql,
   useFragment,
   useRelayEnvironment,
 } from "react-relay";
+import graphql from "babel-plugin-relay/macro";
+
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
 import { BsCircleFill, BsChevronRight, BsXCircle } from "react-icons/bs";
@@ -16,16 +17,29 @@ import {
 
 import { ListKToUpdate, timeAgo } from "./helpers";
 
-interface ListProps {
-  listing: ListingFragmentGraphQL_listing$key;
-}
-
 const dismissConfig = {
   duration: 50,
 };
 
+interface ListProps {
+  listing: ListingFragmentGraphQL_listing$key;
+}
+
 const Listing = ({ listing }: ListProps) => {
   const environment = useRelayEnvironment();
+  const ListingFragmentGraphQL = graphql`
+    fragment ListingFragmentGraphQL_listing on List {
+      id
+      title
+      created
+      num_comments
+      thumbnail
+      author
+      name
+      isDismissed
+      isRead
+    }
+  `;
   const node = useFragment(ListingFragmentGraphQL, listing);
 
   const liRef = useRef<HTMLLIElement>(null);
@@ -248,18 +262,4 @@ const Time = styled.span`
   ${({ theme }) => `color:${theme.time};`}
   font-size: 14px;
   align-self: center;
-`;
-
-const ListingFragmentGraphQL = graphql`
-  fragment ListingFragmentGraphQL_listing on List {
-    id
-    title
-    created
-    num_comments
-    thumbnail
-    author
-    name
-    isDismissed
-    isRead
-  }
 `;

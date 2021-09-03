@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import {
   usePaginationFragment,
-  graphql,
   useRelayEnvironment,
   commitLocalUpdate,
 } from "react-relay";
+import graphql from "babel-plugin-relay/macro";
+
 import styled from "styled-components";
 
 import Listing from "./Listing";
@@ -22,6 +23,31 @@ interface ListingsProps {
 const Listings = ({ viewer }: ListingsProps) => {
   const ulRef = useRef<HTMLUListElement>(null);
   const environment = useRelayEnvironment();
+  const ListingsGraphQL = graphql`
+    fragment ListingsPagination_viewer on Viewer
+    @argumentDefinitions(
+      count: { type: "Int", defaultValue: 7 }
+      cursor: { type: "String", defaultValue: null }
+    )
+    @refetchable(queryName: "ListingsPaginationQuery") {
+      listings(first: $count, after: $cursor)
+        @connection(key: "ListingsPagination_viewer_listings") {
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            ...ListingFragmentGraphQL_listing
+          }
+        }
+      }
+    }
+  `;
   const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment<
     ListingsPaginationQuery,
     ListingsPagination_viewer$key
@@ -154,30 +180,4 @@ const StyledUl = styled.ul`
   margin: 0;
   overflow-y: scroll;
   flex: 1;
-`;
-
-const ListingsGraphQL = graphql`
-  fragment ListingsPagination_viewer on Viewer
-  @argumentDefinitions(
-    count: { type: "Int", defaultValue: 7 }
-    cursor: { type: "String", defaultValue: null }
-  )
-  @refetchable(queryName: "ListingsPaginationQuery") {
-    listings(first: $count, after: $cursor)
-      @connection(key: "ListingsPagination_viewer_listings") {
-      pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          ...ListingFragmentGraphQL_listing
-        }
-      }
-    }
-  }
 `;
