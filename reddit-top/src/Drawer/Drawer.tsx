@@ -1,5 +1,10 @@
-import { useRef } from "react";
-import { useLazyLoadQuery, graphql } from "react-relay";
+import { useRef, useEffect } from "react";
+import {
+  useLazyLoadQuery,
+  graphql,
+  useRelayEnvironment,
+  commitLocalUpdate,
+} from "react-relay";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import { useSwipeable } from "react-swipeable";
@@ -17,6 +22,7 @@ interface DrawerProps {
 }
 
 const Drawer = ({ isDrawerHidden, hideDrawer, showDrawer }: DrawerProps) => {
+  const environment = useRelayEnvironment();
   const { viewer } = useLazyLoadQuery<DrawerQuery>(DrawerGraphQL, {});
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +35,20 @@ const Drawer = ({ isDrawerHidden, hideDrawer, showDrawer }: DrawerProps) => {
   const styles = useSpring({
     transform: `translateX(${!!isDrawerHidden ? -drawerWidth / 1.2 : 0}px)`,
   });
+
+  useEffect(() => {
+    commitLocalUpdate(environment, (store) => {
+      const viewerProxy = store.getRoot().getLinkedRecord("viewer");
+      if (viewerProxy) {
+        const postId = `client:Post:${Math.random()}`;
+        const postProxy = store.create(postId, "ActivePost");
+        postProxy.setValue("", "thumbnail");
+        postProxy.setValue("", "title");
+        postProxy.setValue("", "author");
+        viewerProxy.setLinkedRecord(postProxy, "activePost");
+      }
+    });
+  }, [environment]);
 
   return (
     <DrawerContainer {...{ style: styles, ...handlers, ref: containerRef }}>

@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import { useLazyLoadQuery, useRelayEnvironment } from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { animated, useSpring } from "react-spring";
-import { commitLocalUpdate, graphql } from "relay-runtime";
+import { graphql } from "relay-runtime";
 import styled from "styled-components";
 
 import { drawerWidth } from "./App";
@@ -13,21 +12,6 @@ interface ActivePostProps {
 
 const ActivePost = ({ isDrawerHidden }: ActivePostProps) => {
   const { viewer } = useLazyLoadQuery<ActivePostQuery>(ActivePostGraphQL, {});
-  const environment = useRelayEnvironment();
-
-  useEffect(() => {
-    commitLocalUpdate(environment, (store) => {
-      const viewerProxy = store.getRoot().getLinkedRecord("viewer");
-      if (viewerProxy) {
-        const postId = `client:Note:${Math.random()}`;
-        const postProxy = store.create(postId, "ActivePost");
-        postProxy.setValue("", "thumbnail");
-        postProxy.setValue("", "title");
-        postProxy.setValue("", "author");
-        viewerProxy.setLinkedRecord(postProxy, "activePost");
-      }
-    });
-  }, [environment]);
 
   const style = useSpring({
     marginLeft: `${isDrawerHidden ? 58 : drawerWidth}px`,
