@@ -4,6 +4,7 @@ import {
   useFragment,
   useRelayEnvironment,
 } from "react-relay";
+import classNames from "classnames";
 import graphql from "babel-plugin-relay/macro";
 
 import { animated, useSpring } from "react-spring";
@@ -136,12 +137,20 @@ const Listing = ({ listing }: ListProps) => {
   const onListingImageLoadError = () => {
     setisImageLoadedError(true);
   };
-
+  const [isDimissedClass, setIsDimissedClass] = useState(false);
+  useEffect(() => {
+    if (node.isDismissed) {
+      setTimeout(() => {
+        setIsDimissedClass(true);
+      }, 501);
+    }
+  }, [node.isDismissed]);
   return (
     <StyledAnimatedLi
       data-testid={`@test:list:${node.id}`}
       ref={liRef}
       style={liStyle}
+      className={classNames({ hasDismissed: isDimissedClass })}
       onClick={onRead}>
       <TopSection>
         {!node.isRead && (
