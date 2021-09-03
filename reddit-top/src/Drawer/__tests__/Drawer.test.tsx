@@ -159,4 +159,43 @@ describe("Drawer Tests", () => {
       expect(listOnDismissClick && listOnDismissClick.isDismissed).toBeTruthy();
     });
   });
+
+  it("should render Drawer lists and handle dismissing all lists when Dismiss All btn is pressed", async () => {
+    const ul = screen.getByTestId("@test:listings:ul");
+
+    expect(ul).toBeTruthy();
+
+    initialMockListings.edges.forEach((edge) => {
+      const li = screen.getByTestId(`@test:list:${edge.node.id}`);
+      expect(li).toBeTruthy();
+
+      const list = getNode(environment, edge.node.id);
+      expect(list).toBeTruthy();
+      expect(list && list.isDismissed).toBeFalsy();
+    });
+
+    const dismissAllBtn = screen.getByTestId(`@test:listings:dismissAllBtn`);
+    expect(dismissAllBtn).toBeTruthy();
+
+    fireEvent.click(dismissAllBtn);
+
+    jest.advanceTimersByTime(500);
+
+    initialMockListings.edges.forEach((edge) => {
+      const li = screen.getByTestId(`@test:list:${edge.node.id}`);
+      expect(li).toBeTruthy();
+      expect(li).toHaveStyle({
+        opacity: 0,
+        "font-size": "0px",
+        transform: `translateX(-100px)`,
+        "padding-top": "0px",
+        "padding-right": "0px",
+        "padding-bottom": "0px",
+        "padding-left": "0px",
+      });
+      const listOnDismissClick = getNode(environment, edge.node.id);
+      expect(listOnDismissClick).toBeTruthy();
+      expect(listOnDismissClick && listOnDismissClick.isDismissed).toBeTruthy();
+    });
+  });
 });
