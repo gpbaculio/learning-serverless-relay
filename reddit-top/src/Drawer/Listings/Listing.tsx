@@ -53,7 +53,7 @@ const Listing = ({ listing }: ListProps) => {
       const { offsetHeight } = liRef.current;
       setHeight(offsetHeight);
     } else if (liRef && liRef.current && isImageLoadedError) {
-      setHeight(189);
+      setHeight(210);
     }
   }, [liRef, isImageLoaded, isImageLoadedError]);
 
@@ -195,6 +195,7 @@ const StyledAnimatedLi = styled(animated.li)`
   list-style: none;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   cursor: pointer;
   &:hover {
     background-color: #323232;

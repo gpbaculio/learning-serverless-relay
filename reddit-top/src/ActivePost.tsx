@@ -44,9 +44,8 @@ const ActivePost = ({ isDrawerHidden }: ActivePostProps) => {
 
 export default ActivePost;
 
-const Author = styled.h1`
+const Author = styled.h2`
   font-size: 24px;
-  font-weight: 600;
   align-self: flex-start;
 `;
 
@@ -56,9 +55,8 @@ const Thumbnail = styled.img`
   height: auto;
 `;
 
-const Title = styled.h2`
+const Title = styled.p`
   font-size: 16px;
-  font-weight: 600;
   align-self: flex-start;
 `;
 

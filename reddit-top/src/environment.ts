@@ -10,7 +10,10 @@ import {
   GraphQLResponse,
 } from "relay-runtime";
 
-const GRAPHQL_URL = `http://localhost:3001/graphql`;
+const GRAPHQL_URL =
+  process.env.NODE_ENV === "development"
+    ? `http://localhost:3001/graphql`
+    : `https://skw1lr98pd.execute-api.us-east-1.amazonaws.com/graphql`;
 
 const getRequestBodyWithUploadables = (
   _request: RequestParameters,

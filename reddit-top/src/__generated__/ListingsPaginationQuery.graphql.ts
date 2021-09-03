@@ -3,7 +3,6 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-
 import { FragmentRefs } from "relay-runtime";
 export type ListingsPaginationQueryVariables = {
     count?: number | null;
@@ -23,7 +22,7 @@ export type ListingsPaginationQuery = {
 
 /*
 query ListingsPaginationQuery(
-  $count: Int = 7
+  $count: Int = 25
   $cursor: String
 ) {
   viewer {
@@ -65,7 +64,7 @@ fragment ListingsPagination_viewer_1G22uz on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": 7,
+    "defaultValue": 25,
     "kind": "LocalArgument",
     "name": "count"
   },
@@ -310,14 +309,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "43d7478d53f7541784335c4f91543f30",
+    "cacheID": "9dbc8d206257610eb473754f0044a3f6",
     "id": null,
     "metadata": {},
     "name": "ListingsPaginationQuery",
     "operationKind": "query",
-    "text": "query ListingsPaginationQuery(\n  $count: Int = 7\n  $cursor: String\n) {\n  viewer {\n    ...ListingsPagination_viewer_1G22uz\n    id\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_1G22uz on Viewer {\n  listings(first: $count, after: $cursor) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query ListingsPaginationQuery(\n  $count: Int = 25\n  $cursor: String\n) {\n  viewer {\n    ...ListingsPagination_viewer_1G22uz\n    id\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer_1G22uz on Viewer {\n  listings(first: $count, after: $cursor) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c8c04a3ea9802d1b4d8798bb119f86a7';
+(node as any).hash = 'cdf64ea601b79d74736bddab110f9454';
 export default node;

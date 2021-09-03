@@ -3,7 +3,6 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-
 import { FragmentRefs } from "relay-runtime";
 export type DrawerQueryVariables = {};
 export type DrawerQueryResponse = {
@@ -40,7 +39,7 @@ fragment ListingFragmentGraphQL_listing on List {
 }
 
 fragment ListingsPagination_viewer on Viewer {
-  listings(first: 7) {
+  listings(first: 25) {
     pageInfo {
       startCursor
       endCursor
@@ -78,7 +77,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 7
+    "value": 25
   }
 ];
 return {
@@ -272,7 +271,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "listings(first:7)"
+            "storageKey": "listings(first:25)"
           },
           {
             "alias": null,
@@ -289,12 +288,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "474791d6861ca876a70d0cfb19e4bb99",
+    "cacheID": "dbbf7d5ff0ccdc9ec139979a2c3a0e59",
     "id": null,
     "metadata": {},
     "name": "DrawerQuery",
     "operationKind": "query",
-    "text": "query DrawerQuery {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer on Viewer {\n  listings(first: 7) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query DrawerQuery {\n  viewer {\n    user\n    id\n    ...ListingsPagination_viewer\n  }\n}\n\nfragment ListingFragmentGraphQL_listing on List {\n  id\n  title\n  created\n  num_comments\n  thumbnail\n  author\n  name\n}\n\nfragment ListingsPagination_viewer on Viewer {\n  listings(first: 25) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasNextPage\n      hasPreviousPage\n    }\n    edges {\n      cursor\n      node {\n        id\n        ...ListingFragmentGraphQL_listing\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();

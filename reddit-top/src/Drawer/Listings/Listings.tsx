@@ -26,7 +26,7 @@ const Listings = ({ viewer }: ListingsProps) => {
   const ListingsGraphQL = graphql`
     fragment ListingsPagination_viewer on Viewer
     @argumentDefinitions(
-      count: { type: "Int", defaultValue: 7 }
+      count: { type: "Int", defaultValue: 25 }
       cursor: { type: "String", defaultValue: null }
     )
     @refetchable(queryName: "ListingsPaginationQuery") {
@@ -82,7 +82,7 @@ const Listings = ({ viewer }: ListingsProps) => {
           ulRefValue.scrollHeight - ulRefValue.scrollTop ===
           ulRefValue.clientHeight;
         if (isBottom && !isLoadingNext && hasNext) {
-          loadNext(7);
+          loadNext(25);
         }
       }
     };
