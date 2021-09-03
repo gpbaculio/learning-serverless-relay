@@ -36,10 +36,7 @@ const Listings = ({ viewer }: ListingsProps) => {
             list.setValue(value, k);
           } else {
             k.forEach((j) => {
-              if (
-                typeof list.getValue("isDismissed") === "undefined" &&
-                typeof list.getValue("isRead") === "undefined"
-              ) {
+              if (typeof list.getValue(j) === "undefined") {
                 list.setValue(value, j);
               }
             });
