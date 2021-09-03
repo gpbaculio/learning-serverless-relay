@@ -3,7 +3,6 @@
 // @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
-import ListingsPaginationQuery from "./ListingsPaginationQuery.graphql";
 import { FragmentRefs } from "relay-runtime";
 export type ListingsPagination_viewer = {
     readonly listings: {
@@ -38,7 +37,7 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 7,
+      "defaultValue": 25,
       "kind": "LocalArgument",
       "name": "count"
     },
@@ -70,7 +69,7 @@ return {
       "fragmentPathInResult": [
         "viewer"
       ],
-      "operation": ListingsPaginationQuery
+      "operation": require('./ListingsPaginationQuery.graphql.ts')
     }
   },
   "name": "ListingsPagination_viewer",
@@ -178,5 +177,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c8c04a3ea9802d1b4d8798bb119f86a7';
+(node as any).hash = 'cdf64ea601b79d74736bddab110f9454';
 export default node;
