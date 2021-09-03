@@ -142,7 +142,7 @@ const Listing = ({ listing }: ListProps) => {
     if (node.isDismissed) {
       setTimeout(() => {
         setIsDimissedClass(true);
-      }, 501);
+      }, 500);
     }
   }, [node.isDismissed]);
   return (
