@@ -152,10 +152,10 @@ describe("Drawer Tests", () => {
       expect(list && list.isDismissed).toBeFalsy();
 
       expect(dismissBtn).toBeTruthy();
-
-      fireEvent.click(dismissBtn);
-
-      jest.advanceTimersByTime(500);
+      act(() => {
+        fireEvent.click(dismissBtn);
+        jest.advanceTimersByTime(500);
+      });
 
       expect(li).toHaveStyle({
         opacity: 0,
@@ -189,9 +189,10 @@ describe("Drawer Tests", () => {
     const dismissAllBtn = screen.getByTestId(`@test:listings:dismissAllBtn`);
     expect(dismissAllBtn).toBeTruthy();
 
-    fireEvent.click(dismissAllBtn);
-
-    jest.advanceTimersByTime(500);
+    act(() => {
+      fireEvent.click(dismissAllBtn);
+      jest.advanceTimersByTime(500);
+    });
 
     initialMockListings.edges.forEach((edge) => {
       const li = screen.getByTestId(`@test:list:${edge.node.id}`);

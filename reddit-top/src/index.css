@@ -15,3 +15,7 @@ code {
 * {
   box-sizing: border-box;
 }
+.hasDismissed {
+  position: absolute;
+  pointer-events: none;
+}

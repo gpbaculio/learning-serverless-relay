@@ -19,9 +19,9 @@ Object {
           data-testid="@test:listings:ul"
         >
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZmE1ajg="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -133,9 +133,9 @@ Object {
             </div>
           </li>
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZjlqaXQ="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -247,9 +247,9 @@ Object {
             </div>
           </li>
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZjY5c3A="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -361,9 +361,9 @@ Object {
             </div>
           </li>
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZmE3aTE="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -475,9 +475,9 @@ Object {
             </div>
           </li>
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZjZtZnk="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -589,9 +589,9 @@ Object {
             </div>
           </li>
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZjNiNm4="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -703,9 +703,9 @@ Object {
             </div>
           </li>
           <li
-            class="sc-eCstlR kudgiM"
+            class="sc-eCstlR fRtSyn"
             data-testid="@test:list:TGlzdDp0M19wZmM2M3Q="
-            style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+            style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
           >
             <div
               class="sc-iqHYmW krZnLk"
@@ -735,7 +735,7 @@ Object {
               <span
                 class="sc-dQoVA hqkYrc"
               >
-                2 days ago
+                3 days ago
               </span>
             </div>
             <div
@@ -841,9 +841,9 @@ Object {
         data-testid="@test:listings:ul"
       >
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZmE1ajg="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -955,9 +955,9 @@ Object {
           </div>
         </li>
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZjlqaXQ="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -1069,9 +1069,9 @@ Object {
           </div>
         </li>
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZjY5c3A="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -1183,9 +1183,9 @@ Object {
           </div>
         </li>
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZmE3aTE="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -1297,9 +1297,9 @@ Object {
           </div>
         </li>
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZjZtZnk="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -1411,9 +1411,9 @@ Object {
           </div>
         </li>
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZjNiNm4="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -1525,9 +1525,9 @@ Object {
           </div>
         </li>
         <li
-          class="sc-eCstlR kudgiM"
+          class="sc-eCstlR fRtSyn"
           data-testid="@test:list:TGlzdDp0M19wZmM2M3Q="
-          style="opacity: 1; font-size: 18px; transform: translateX(0px); padding: 12px 6px 12px 12px;"
+          style="opacity: 1; font-size: 18px; width: 100%; transform: translateX(0px); padding: 12px 6px 12px 12px;"
         >
           <div
             class="sc-iqHYmW krZnLk"
@@ -1557,7 +1557,7 @@ Object {
             <span
               class="sc-dQoVA hqkYrc"
             >
-              2 days ago
+              3 days ago
             </span>
           </div>
           <div

@@ -4,6 +4,7 @@ import {
   useFragment,
   useRelayEnvironment,
 } from "react-relay";
+import classNames from "classnames";
 import graphql from "babel-plugin-relay/macro";
 
 import { animated, useSpring } from "react-spring";
@@ -61,6 +62,7 @@ const Listing = ({ listing }: ListProps) => {
     ...(height !== 0 && { height: `${node.isDismissed ? 0 : height}px` }),
     opacity: node.isDismissed ? 0 : 1,
     fontSize: `${node.isDismissed ? 0 : 18}px`,
+    width: `${node.isDismissed ? "0" : "100%"}`,
     transform: `translateX(${node.isDismissed ? -100 : 0}px)`,
     paddingTop: `${node.isDismissed ? 0 : 12}px`,
     paddingBottom: `${node.isDismissed ? 0 : 12}px`,
@@ -135,12 +137,20 @@ const Listing = ({ listing }: ListProps) => {
   const onListingImageLoadError = () => {
     setisImageLoadedError(true);
   };
-
+  const [isDimissedClass, setIsDimissedClass] = useState(false);
+  useEffect(() => {
+    if (node.isDismissed) {
+      setTimeout(() => {
+        setIsDimissedClass(true);
+      }, 500);
+    }
+  }, [node.isDismissed]);
   return (
     <StyledAnimatedLi
       data-testid={`@test:list:${node.id}`}
       ref={liRef}
       style={liStyle}
+      className={classNames({ hasDismissed: isDimissedClass })}
       onClick={onRead}>
       <TopSection>
         {!node.isRead && (
